@@ -1,0 +1,36 @@
+- Le funzioni in Assembly vanno scritte in ASM_funct come riportato dai commenti facendo export nome_funzione.
+	Nei file all'interno deei quali le si vuole chiamare bisogna definirle sotto l'inclusione delle librerie #include
+	come segue: 
+	extern <tipo ritorno> nome_funzione(<tipo> <nome argomento>); 
+	In assembly si possono usare registri ad 8 ed a 32 bit (anche a 16 ma poco usati), che in C equivalgono 
+	rispettivamente ai tipi char ed int. 
+
+- Le periferiche come bottoni, joystick... modellano il proprio interrupt nell'handler IRQ_RIT (), 
+	unica funzione presente. Il grande if presente divide attraverso i commenti ogni area di codice 
+	di una rispettiva componente. Ad esmepio il codice eseguito da Key 1 (o bottone 1) è 
+	circondata da un area di commento dle tipo /* KEY 1 */ 
+
+- I led offrono le loro funzionalità attraverso led_funct e basta. Quindi si scrivono appsosite funzioni 
+	al proprio interno, che poi potranno essere chiamate da altre parti, come main, codice dei bottoni, timer...
+
+- I timer hanno una frequenza di 25Mhz o 25 milioni di Hertz (25*10^6 hz). Essi vanno inizializzati 
+ 	attraverso  i seguenti parametri: 
+	-- Numero timer, in totale abbiamo 4 timer da poter usare
+	-- Prescaler, quanti giri aggiuntivi fare prima di matchare con il count (detto k) del match 
+		register
+	-- Match register; ogni timer ha 4 match register da poter usare, ovvero 4 valori da poter 
+		inizializzare e quinid 4 funzionalità da poter modellare attraverso count differenti. 
+	-- SRI flag match register, Stop reset e interrupt. Il Most bit indica al timer di fermarsi, il secondo 
+		di resettarlo ed il terzo di generare l'interrupt, che porterà all'esecuzione del codice definito 
+		per quel timer e per quel Match register all'interno di IRQ_timer. 
+	-- Count, detto k, o TimerInterval nella funzione. 
+	
+	I timer dopo esser stati inizializzati, anche più volte ad esempio per esprimere count diversi per diversi 
+	match register, devono essere enable con la loro funzione apposita per poterli avviar e quindi farli funzionare. 
+	
+	Count = [s]*[hz] = [s]*(25*10^6). Se questo valore supera i 2^32, ovvero circa 4.2miliardi, allora dobbiamo 
+		trovare il valore di Prescaler: 
+		Prescaler = (Count/2^32) - 1 --> solo se Count > 2^32. Il prescaler viene approssimato 
+		all'intero successivo a prescindere dalla sua parte decimale. Ad esempio 1.1 diventa 2. 
+	Il nuovo count, dato che non può superare quella dimensione sarà 
+		Count (aiutato da Prescaler) = Val/(Presc+1)

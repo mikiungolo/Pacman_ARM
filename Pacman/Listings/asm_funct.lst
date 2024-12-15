@@ -1,0 +1,41 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; here asm functions 
+    2 00000000                 AREA             myFunct, CODE, READONLY
+    3 00000000         ; remember to "export <name_function> 
+    4 00000000         
+    5 00000000         ; name funct PROC 
+    6 00000000         ; PUSH {}
+    7 00000000         
+    8 00000000         
+    9 00000000         ; POP {}
+   10 00000000         ; ENDP
+   11 00000000         
+   12 00000000                 END
+Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M3 --depe
+nd=.\objects\asm_funct.d -o.\objects\asm_funct.o -I.\Source -I.\Source\button_E
+XINT -I.\Source\led -I.\Source\timer -I.\Source\CMSIS_core -I.\RTE\_SW_Debug -I
+D:\Programmi\Keil\ARM\CMSIS\6.1.0\CMSIS\Core\Include -ID:\Programmi\Keil\Keil\L
+PC1700_DFP\2.7.2\Device\Include --predefine="__EVAL SETA 1" --predefine="__UVIS
+ION_VERSION SETA 541" --predefine="LPC175x_6x SETA 1" --predefine="_RTE_ SETA 1
+" --list=.\listings\asm_funct.lst ASM_funct.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+myFunct 00000000
+
+Symbol: myFunct
+   Definitions
+      At line 2 in file ASM_funct.s
+   Uses
+      None
+Comment: myFunct unused
+1 symbol
+335 symbols in table
