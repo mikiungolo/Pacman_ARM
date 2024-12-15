@@ -583,6 +583,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Pacman</GroupName>
+          <Files>
+            <File>
+              <FileName>pacman.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\pacman.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\board.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>
@@ -1160,6 +1175,21 @@
               <FileName>HzLib.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Source\GLCD\HzLib.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Pacman</GroupName>
+          <Files>
+            <File>
+              <FileName>pacman.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\pacman.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\board.c</FilePath>
             </File>
           </Files>
         </Group>
