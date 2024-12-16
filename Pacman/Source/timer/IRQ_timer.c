@@ -11,7 +11,6 @@
 #include "timer.h"
 #include "../led/led.h"
 #include "../GLCD/GLCD.h" 
-#include "../TouchPanel/TouchPanel.h"
 #include <stdio.h> /*for sprintf*/
 
 /******************************************************************************
@@ -29,11 +28,6 @@ unsigned char ledval = 0xA5;
 
 void TIMER0_IRQHandler (void)
 {
-	static int clear = 0;
-	char time_in_char[5] = "";
-	int mosse[6][2]={{1,1},{-1,-1},{1,0},{-1,0},{0,1},{0,-1}};
-	int i=0;
-	
 	if(LPC_TIM0->IR & 1) // MR0
 	{ 
 		// your code - Refresh touch 

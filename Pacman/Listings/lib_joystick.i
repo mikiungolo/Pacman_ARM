@@ -1,11 +1,11 @@
-# 1 "../../Template_miki/09_sample_JOYSTICK/Source/joystick/lib_joystick.c"
+# 1 "Source/joystick/lib_joystick.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 393 "<built-in>" 3
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
-# 1 "../../Template_miki/09_sample_JOYSTICK/Source/joystick/lib_joystick.c" 2
-# 11 "../../Template_miki/09_sample_JOYSTICK/Source/joystick/lib_joystick.c"
+# 1 "Source/joystick/lib_joystick.c" 2
+# 11 "Source/joystick/lib_joystick.c"
 # 1 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h" 1
 # 41 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h"
 typedef enum IRQn
@@ -1782,11 +1782,11 @@ typedef struct
        uint32_t RESERVED8;
   volatile uint32_t Module_ID;
 } LPC_EMAC_TypeDef;
-# 12 "../../Template_miki/09_sample_JOYSTICK/Source/joystick/lib_joystick.c" 2
-# 1 "../../Template_miki/09_sample_JOYSTICK/Source/joystick\\joystick.h" 1
-# 12 "../../Template_miki/09_sample_JOYSTICK/Source/joystick\\joystick.h"
+# 12 "Source/joystick/lib_joystick.c" 2
+# 1 "Source/joystick\\joystick.h" 1
+# 12 "Source/joystick\\joystick.h"
 void joystick_init(void);
-# 13 "../../Template_miki/09_sample_JOYSTICK/Source/joystick/lib_joystick.c" 2
+# 13 "Source/joystick/lib_joystick.c" 2
 
 
 
@@ -1800,12 +1800,4 @@ void joystick_init(void) {
 
   ((LPC_PINCON_TypeDef *) ((0x40000000UL) + 0x2C000) )->PINSEL3 &= ~(3<<20); //PIN mode GPIO (00b value per P1.26)
  ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00020) )->FIODIR &= ~(1<<26); //P1.26 Input (joysticks on PORT1 defined as Input)
-
-
-  ((LPC_PINCON_TypeDef *) ((0x40000000UL) + 0x2C000) )->PINSEL3 &= ~(3<<22); //PIN mode GPIO (00b value per P1.26)
- ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00020) )->FIODIR &= ~(1<<27); //P1.26 Input (joysticks on PORT1 defined as Input)
-
-
-  ((LPC_PINCON_TypeDef *) ((0x40000000UL) + 0x2C000) )->PINSEL3 &= ~(3<<24); //PIN mode GPIO (00b value per P1.26)
- ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00020) )->FIODIR &= ~(1<<28); //P1.26 Input (joysticks on PORT1 defined as Input)
 }

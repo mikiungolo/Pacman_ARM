@@ -20,9 +20,7 @@
 #include "timer/timer.h"
 #include "RIT/RIT.h"
 #include "joystick/joystick.h"
-#include "adc/adc.h"
 #include "GLCD/GLCD.h" 
-#include "TouchPanel/TouchPanel.h"
 
 /* Led external variables from funct_led */
 extern unsigned char led_value;					/* defined in lib_led								*/

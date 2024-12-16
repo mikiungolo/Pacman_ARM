@@ -1817,40 +1817,6 @@ void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t
 void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, uint16_t bkColor );
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
 # 14 "Source/timer/IRQ_timer.c" 2
-# 1 "Source/timer\\../TouchPanel/TouchPanel.h" 1
-# 30 "Source/timer\\../TouchPanel/TouchPanel.h"
-typedef struct POINT
-{
-   uint16_t x;
-   uint16_t y;
-}Coordinate;
-
-
-typedef struct Matrix
-{
-long double An,
-            Bn,
-            Cn,
-            Dn,
-            En,
-            Fn,
-            Divider ;
-} Matrix ;
-
-
-extern Coordinate ScreenSample[3];
-extern Coordinate DisplaySample[3];
-extern Matrix matrix ;
-extern Coordinate display ;
-# 76 "Source/timer\\../TouchPanel/TouchPanel.h"
-void TP_Init(void);
-Coordinate *Read_Ads7846(void);
-void TouchPanel_Calibrate(void);
-void DrawCross(uint16_t Xpos,uint16_t Ypos);
-void TP_DrawPoint(uint16_t Xpos,uint16_t Ypos);
-uint8_t setCalibrationMatrix( Coordinate * displayPtr,Coordinate * screenPtr,Matrix * matrixPtr);
-uint8_t getDisplayPoint(Coordinate * displayPtr,Coordinate * screenPtr,Matrix * matrixPtr );
-# 15 "Source/timer/IRQ_timer.c" 2
 # 1 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\stdio.h" 1 3
 # 53 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\stdio.h" 3
     typedef unsigned int size_t;
@@ -2154,19 +2120,14 @@ extern __attribute__((__nothrow__)) int _fisatty(FILE * ) __attribute__((__nonnu
 
 extern __attribute__((__nothrow__)) void __use_no_semihosting_swi(void);
 extern __attribute__((__nothrow__)) void __use_no_semihosting(void);
-# 16 "Source/timer/IRQ_timer.c" 2
-# 26 "Source/timer/IRQ_timer.c"
+# 15 "Source/timer/IRQ_timer.c" 2
+# 25 "Source/timer/IRQ_timer.c"
 extern unsigned char led_value;
 
 unsigned char ledval = 0xA5;
 
 void TIMER0_IRQHandler (void)
 {
- static int clear = 0;
- char time_in_char[5] = "";
- int mosse[6][2]={{1,1},{-1,-1},{1,0},{-1,0},{0,1},{0,-1}};
- int i=0;
-
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
  {
   // your code - Refresh touch
@@ -2191,7 +2152,7 @@ void TIMER0_IRQHandler (void)
  }
   return;
 }
-# 71 "Source/timer/IRQ_timer.c"
+# 65 "Source/timer/IRQ_timer.c"
 void TIMER1_IRQHandler (void)
 {
 
@@ -2217,7 +2178,7 @@ void TIMER1_IRQHandler (void)
  }
  return;
 }
-# 106 "Source/timer/IRQ_timer.c"
+# 100 "Source/timer/IRQ_timer.c"
 void TIMER2_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
@@ -2243,7 +2204,7 @@ void TIMER2_IRQHandler (void)
  }
   return;
 }
-# 142 "Source/timer/IRQ_timer.c"
+# 136 "Source/timer/IRQ_timer.c"
 void TIMER3_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0

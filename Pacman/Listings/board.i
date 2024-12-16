@@ -1,11 +1,18 @@
-# 1 "Source/joystick/funct_joystick.c"
+# 1 "Source/Pacman/board.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 393 "<built-in>" 3
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
-# 1 "Source/joystick/funct_joystick.c" 2
-# 11 "Source/joystick/funct_joystick.c"
+# 1 "Source/Pacman/board.c" 2
+
+
+
+
+
+
+
+//#include <stdio.h>
 # 1 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h" 1
 # 41 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h"
 typedef enum IRQn
@@ -1782,26 +1789,54 @@ typedef struct
        uint32_t RESERVED8;
   volatile uint32_t Module_ID;
 } LPC_EMAC_TypeDef;
-# 12 "Source/joystick/funct_joystick.c" 2
-# 1 "Source/joystick\\joystick.h" 1
-# 12 "Source/joystick\\joystick.h"
-void joystick_init(void);
-# 13 "Source/joystick/funct_joystick.c" 2
-# 1 "Source/joystick\\../led/led.h" 1
-# 12 "Source/joystick\\../led/led.h"
-void LED_init(void);
-void LED_deinit(void);
-
-
-void LED_On (unsigned int num);
-void LED_Off (unsigned int num);
-void LED_Out(unsigned int value);
-# 14 "Source/joystick/funct_joystick.c" 2
+# 10 "Source/Pacman/board.c" 2
+# 1 "Source/Pacman\\pacman.h" 1
+# 11 "Source/Pacman/board.c" 2
 
 
 
 
 
-void joystick_On(unsigned int num) {
- LED_Out(num);
-}
+
+
+
+enum kind_cell{S, // standard pill
+        P, // power pill
+        W, // wall
+        F, // free cell
+        E, // edge of board
+        TL, // teleport left
+        TR}; // teleport right
+
+
+volatile uint8_t board[30][26] = {
+ E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E,
+ E, S, S, S, S, S, S, S, S, S, S, S, E, E, S, S, S, S, S, S, S, S, S, S, S, E,
+  E, S, W, W, W, W, S, W, W, W, W, S, E, E, S, W, W, W, W, S, W, W, W, W, S, E,
+ E, S, W, W, W, W, S, W, W, W, W, S, E, E, S, W, W, W, W, S, W, W, W, W, S, E,
+ E, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, E,
+ E, S, W, W, W, W, S, W, W, S, W, W, W, W, W, W, S, W, W, S, W, W, W, W, S, E,
+ E, S, W, W, W, W, S, W, W, S, W, W, W, W, W, W, S, W, W, S, W, W, W, W, S, E,
+ E, S, S, S, S, S, S, W, W, S, S, S, W, W, S, S, S, W, W, S, S, S, S, S, S, E,
+ E, E, E, E, E, E, S, W, W, W, W, S, W, W, S, W, W, W, W, S, E, E, E, E, E, E,
+ F, F, F, F, F, E, S, W, W, W, W, S, W, W, S, W, W, W, W, S, E, F, F, F, F, F,
+ F, F, F, F, F, E, S, W, W, W, W, S, W, W, S, W, W, W, W, S, E, F, F, F, F, F,
+ F, F, F, F, F, E, S, W, W, S, S, F, F, F, F, S, S, W, W, S, E, F, F, F, F, F,
+ F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
+ E, E, E, E, E, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, E, E, E, E, E,
+ TL, F, F, F, F, F, F, F, F, S, W, W, W, W, W, W, S, F, F, F, F, F, F, F, F, TR,
+ E, E, E, E, E, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, E, E, E, E, E,
+ F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
+ F, F, F, F, F, E, S, W, W, S, S, F, F, F, F, S, S, W, W, S, E, F, F, F, F, F,
+ F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
+ F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
+ E, E, E, E, E, E, S, W, W, S, S, S, W, W, S, S, S, W, W, S, E, E, E, E, E, E,
+ E, S, S, S, S, S, S, S, S, S, W, S, W, W, S, W, S, S, S, S, S, S, S, S, S, E,
+ E, S, W, W, W, W, S, W, W, W, W, S, W, W, S, W, W, W, W, S, W, W, W, W, S, E,
+ E, S, W, W, W, W, S, W, W, W, W, S, W, W, S, W, W, W, W, S, W, W, W, W, S, E,
+ E, S, W, W, W, W, S, S, S, S, S, S, S, S, S, S, S, S, S, S, W, W, W, W, S, E,
+ E, S, S, S, S, S, S, W, W, W, W, S, W, W, S, W, W, W, W, S, S, S, S, S, S, E,
+ E, S, W, W, W, W, W, W, W, W, W, S, W, W, S, W, W, W, W, W, W, W, W, W, S, E,
+ E, S, W, W, W, W, W, W, W, W, W, S, W, W, S, W, W, W, W, W, W, W, W, W, S, E,
+ E, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, E,
+ E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E};
