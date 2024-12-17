@@ -1791,15 +1791,21 @@ typedef struct
 } LPC_EMAC_TypeDef;
 # 10 "Source/Pacman/board.c" 2
 # 1 "Source/Pacman\\pacman.h" 1
+# 11 "Source/Pacman\\pacman.h"
+ void draw_board(void);
 # 11 "Source/Pacman/board.c" 2
-
-
-
-
-
-
-
-
+# 1 "./Source\\GLCD/GLCD.h" 1
+# 90 "./Source\\GLCD/GLCD.h"
+void LCD_Initialization(void);
+void LCD_Clear(uint16_t Color);
+uint16_t LCD_GetPoint(uint16_t Xpos,uint16_t Ypos);
+void LCD_SetPoint(uint16_t Xpos,uint16_t Ypos,uint16_t point);
+void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t color );
+void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, uint16_t bkColor );
+void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
+void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
+# 12 "Source/Pacman/board.c" 2
+# 22 "Source/Pacman/board.c"
 enum kind_cell{S, // standard pill
         P, // power pill
         W, // wall
@@ -1807,6 +1813,15 @@ enum kind_cell{S, // standard pill
         E, // edge of board
         TL, // teleport left
         TR}; // teleport right
+
+
+void draw_board(void);
+void draw_edge(int, int);
+void draw_wall(int, int);
+void draw_pill(int, int, int);
+
+
+
 
 
 volatile uint8_t board[30][26] = {
@@ -1840,3 +1855,65 @@ volatile uint8_t board[30][26] = {
  E, S, W, W, W, W, W, W, W, W, W, S, W, W, S, W, W, W, W, W, W, W, W, W, S, E,
  E, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, S, E,
  E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E, E};
+
+
+
+
+
+
+void draw_board(void){
+ int i, j;
+ LCD_Clear(0x0000);
+ for(i = 0; i < 30; i++){
+  for(j = 0; j < 26; j++){
+   switch(board[i][j]){
+    case E:
+     draw_edge(j, i);
+     break;
+    case W:
+     draw_wall(j, i);
+     break;
+    case S:
+     draw_pill(board[i][j], j, i);
+     break;
+    default:
+     break;
+   }
+  }
+ }
+}
+
+
+
+
+void draw_wall(int i, int j){
+ int x0, y0, y1;
+ for (x0 = i*9, y0 = j*9, y1 = y0 + 9; y0 < y1; y0++){
+  LCD_DrawLine(x0, y0, x0 + 9, y0, 0x051F);
+ }
+}
+
+
+
+
+void draw_edge(int i, int j){
+ LCD_DrawLine((i*9), (j*9), ((i*9)+9), (j*9), 0x051F);
+ LCD_DrawLine((i*9)+9, (j*9), ((i*9)+9), (j*9)+9, 0x051F);
+ LCD_DrawLine((i*9), (j*9)+9, ((i*9)+9), (j*9)+9, 0x051F);
+ LCD_DrawLine((i*9), (j*9), ((i*9)), (j*9)+9, 0x051F);
+}
+
+
+
+
+
+void draw_pill(int kind_cell, int i, int j){
+ switch(kind_cell){
+  case S:
+   LCD_DrawCircle(((i*9)+5), ((j*9)+5), 3 // radius standard pill/2, 0xFFFF);
+  case P:
+   LCD_DrawCircle(((i*9)+5), ((j*9)+5), 5 // radius power pill/2, 0xFFFF);
+  default:
+   break;
+ }
+}

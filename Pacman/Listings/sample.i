@@ -2140,7 +2140,12 @@ void LCD_SetPoint(uint16_t Xpos,uint16_t Ypos,uint16_t point);
 void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t color );
 void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, uint16_t bkColor );
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
+void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
 # 24 "Source/sample.c" 2
+# 1 "Source\\Pacman/pacman.h" 1
+# 11 "Source\\Pacman/pacman.h"
+ void draw_board(void);
+# 25 "Source/sample.c" 2
 
 
 extern unsigned char led_value;
@@ -2160,8 +2165,7 @@ int main (void) {
  joystick_init();
  LCD_Initialization();
 
- LCD_Clear(0x0000);
- LCD_DrawLine(0, 0, 200, 200, 0xFFFF);
+ draw_board();
 
  ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) ) -> PCONP |= (1 << 22); // TURN ON TIMER 2
  ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) ) -> PCONP |= (1 << 23); // TURN ON TIMER 3

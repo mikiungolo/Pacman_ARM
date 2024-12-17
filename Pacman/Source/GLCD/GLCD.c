@@ -668,6 +668,19 @@ void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_
 }
 
 
+void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor){
+	int x, y;
+
+	// For each pixel coordinates of circle 
+	for (y = -r; y <= r; y++) {
+		for (x = -r; x <= r; x++) {
+			// if point is in the circle --> x^2 + y^2 <= r^2 
+			if ((x * x + y * y) <= (r * r)) {
+				LCD_SetPoint(x0 + x, y0 + y, bkColor);
+			}
+		}
+	}
+}
 
 /*********************************************************************************************************
       END FILE

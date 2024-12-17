@@ -21,6 +21,7 @@
 #include "RIT/RIT.h"
 #include "joystick/joystick.h"
 #include "GLCD/GLCD.h" 
+#include "Pacman/pacman.h"
 
 /* Led external variables from funct_led */
 extern unsigned char led_value;					/* defined in lib_led								*/
@@ -40,8 +41,7 @@ int main (void) {
 	joystick_init(); 
 	LCD_Initialization(); 
 	
-	LCD_Clear(Black);
-	LCD_DrawLine(0, 0, 200, 200, White);
+	draw_board(); 
 	
 	LPC_SC -> PCONP |= (1 << 22);  // TURN ON TIMER 2
 	LPC_SC -> PCONP |= (1 << 23);  // TURN ON TIMER 3	

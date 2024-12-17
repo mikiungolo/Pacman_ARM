@@ -1793,6 +1793,7 @@ void LCD_SetPoint(uint16_t Xpos,uint16_t Ypos,uint16_t point);
 void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t color );
 void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, uint16_t bkColor );
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
+void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
 # 24 "Source/GLCD/GLCD.c" 2
 # 1 "Source/GLCD\\AsciiLib.h" 1
 # 26 "Source/GLCD\\AsciiLib.h"
@@ -2380,4 +2381,19 @@ void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_
         }
     }
     while ( *str != 0 );
+}
+
+
+void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor){
+ int x, y;
+
+ // For each pixel coordinates of circle
+ for (y = -r; y <= r; y++) {
+  for (x = -r; x <= r; x++) {
+   // if point is in the circle --> x^2 + y^2 <= r^2
+   if ((x * x + y * y) <= (r * r)) {
+    LCD_SetPoint(x0 + x, y0 + y, bkColor);
+   }
+  }
+ }
 }
