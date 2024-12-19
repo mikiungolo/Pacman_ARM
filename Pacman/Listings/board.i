@@ -13,8 +13,8 @@
 
 
 //#include <stdio.h>
-# 1 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h" 1
-# 41 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h"
+# 1 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h" 1
+# 41 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h"
 typedef enum IRQn
 {
 
@@ -66,7 +66,7 @@ typedef enum IRQn
   USBActivity_IRQn = 33,
   CANActivity_IRQn = 34,
 } IRQn_Type;
-# 106 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h"
+# 106 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h"
 # 1 "./Source/CMSIS_core\\core_cm3.h" 1
 # 29 "./Source/CMSIS_core\\core_cm3.h" 3
 
@@ -74,8 +74,8 @@ typedef enum IRQn
 
 
 
-# 1 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\stdint.h" 1 3
-# 56 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\stdint.h" 3
+# 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdint.h" 1 3
+# 56 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdint.h" 3
 typedef signed char int8_t;
 typedef signed short int int16_t;
 typedef signed int int32_t;
@@ -976,9 +976,9 @@ static __inline int32_t ITM_CheckChar (void)
     return (1);
   }
 }
-# 107 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h" 2
-# 1 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\system_LPC17xx.h" 1
-# 49 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\system_LPC17xx.h"
+# 107 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h" 2
+# 1 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\system_LPC17xx.h" 1
+# 49 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\system_LPC17xx.h"
 extern uint32_t SystemCoreClock;
 
 
@@ -995,8 +995,8 @@ extern void SystemInit (void);
 
 
 extern void SystemCoreClockUpdate (void);
-# 108 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h" 2
-# 120 "D:/Programmi/Keil/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h"
+# 108 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h" 2
+# 120 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h"
 typedef struct
 {
   volatile uint32_t FLASHCFG;
@@ -1868,13 +1868,13 @@ void draw_board(void){
   for(j = 0; j < 26; j++){
    switch(board[i][j]){
     case E:
-     draw_edge(j, i);
+     draw_edge(i, j);
      break;
     case W:
-     draw_wall(j, i);
+     draw_wall(i, j);
      break;
     case S:
-     draw_pill(board[i][j], j, i);
+     draw_pill(board[i][j], i, j);
      break;
     default:
      break;
@@ -1886,9 +1886,11 @@ void draw_board(void){
 
 
 
-void draw_wall(int i, int j){
+// y --> i become y
+// x --> j become x
+void draw_wall(int y, int x){
  int x0, y0, y1;
- for (x0 = i*9, y0 = j*9, y1 = y0 + 9; y0 < y1; y0++){
+ for (x0 = x*9, y0 = y*9, y1 = y0 + 9; y0 < y1; y0++){
   LCD_DrawLine(x0, y0, x0 + 9, y0, 0x051F);
  }
 }
@@ -1896,23 +1898,45 @@ void draw_wall(int i, int j){
 
 
 
-void draw_edge(int i, int j){
- LCD_DrawLine((i*9), (j*9), ((i*9)+9), (j*9), 0x051F);
- LCD_DrawLine((i*9)+9, (j*9), ((i*9)+9), (j*9)+9, 0x051F);
- LCD_DrawLine((i*9), (j*9)+9, ((i*9)+9), (j*9)+9, 0x051F);
- LCD_DrawLine((i*9), (j*9), ((i*9)), (j*9)+9, 0x051F);
+
+// y --> i become y
+// x --> j become x
+void draw_edge(int y, int x){
+ // up
+ if (y > 0 && board[y-1][x] == E) {
+  // to clean line
+  LCD_DrawLine((x*9), (y*9), ((x*9)+9), (y*9), 0x0000);
+ } else {
+  // to add new line of board
+  LCD_DrawLine((x*9), (y*9), ((x*9)+9), (y*9), 0x051F);
+ }
+
+ // right
+ LCD_DrawLine((x*9)+9, (y*9), ((x*9)+9), (y*9)+9, 0x051F);
+
+ // down
+ LCD_DrawLine((x*9), (y*9)+9, ((x*9)+9), (y*9)+9, 0x051F);
+
+ // left
+ if (x > 0 && board[y][x-1] == E) {
+  LCD_DrawLine((x*9), (y*9), ((x*9)), (y*9)+9, 0x0000);
+ } else {
+  LCD_DrawLine((x*9), (y*9), ((x*9)), (y*9)+9, 0x051F);
+ }
 }
 
 
 
 
 
-void draw_pill(int kind_cell, int i, int j){
+// y --> i become y
+// x --> j become x
+void draw_pill(int kind_cell, int y, int x){
  switch(kind_cell){
   case S:
-   LCD_DrawCircle(((i*9)+5), ((j*9)+5), 3 // radius standard pill/2, 0xFFFF);
+   LCD_DrawCircle(((x*9)+5), ((y*9)+5), 3 // radius standard pill/2, 0xFFFF);
   case P:
-   LCD_DrawCircle(((i*9)+5), ((j*9)+5), 5 // radius power pill/2, 0xFFFF);
+   LCD_DrawCircle(((x*9)+5), ((y*9)+5), 5 // radius power pill/2, 0xFFFF);
   default:
    break;
  }

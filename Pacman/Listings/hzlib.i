@@ -8,8 +8,8 @@
 # 23 "Source/GLCD/HzLib.c"
 # 1 "Source/GLCD\\HzLib.h" 1
 # 27 "Source/GLCD\\HzLib.h"
-# 1 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 1 3
-# 51 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 1 3
+# 51 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
     typedef unsigned int size_t;
 
 
@@ -27,7 +27,7 @@ extern __attribute__((__nothrow__)) void *memcpy(void * __restrict ,
 
 extern __attribute__((__nothrow__)) void *memmove(void * ,
                     const void * , size_t ) __attribute__((__nonnull__(1,2)));
-# 77 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 77 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) char *strcpy(char * __restrict , const char * __restrict ) __attribute__((__nonnull__(1,2)));
 
 
@@ -36,7 +36,7 @@ extern __attribute__((__nothrow__)) char *strcpy(char * __restrict , const char 
 
 
 extern __attribute__((__nothrow__)) char *strncpy(char * __restrict , const char * __restrict , size_t ) __attribute__((__nonnull__(1,2)));
-# 93 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 93 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) char *strcat(char * __restrict , const char * __restrict ) __attribute__((__nonnull__(1,2)));
 
 
@@ -45,7 +45,7 @@ extern __attribute__((__nothrow__)) char *strcat(char * __restrict , const char 
 
 
 extern __attribute__((__nothrow__)) char *strncat(char * __restrict , const char * __restrict , size_t ) __attribute__((__nonnull__(1,2)));
-# 117 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 117 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) int memcmp(const void * , const void * , size_t ) __attribute__((__nonnull__(1,2)));
 
 
@@ -62,7 +62,7 @@ extern __attribute__((__nothrow__)) int strcmp(const char * , const char * ) __a
 
 
 extern __attribute__((__nothrow__)) int strncmp(const char * , const char * , size_t ) __attribute__((__nonnull__(1,2)));
-# 141 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 141 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) int strcasecmp(const char * , const char * ) __attribute__((__nonnull__(1,2)));
 
 
@@ -72,28 +72,28 @@ extern __attribute__((__nothrow__)) int strcasecmp(const char * , const char * )
 
 
 extern __attribute__((__nothrow__)) int strncasecmp(const char * , const char * , size_t ) __attribute__((__nonnull__(1,2)));
-# 158 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 158 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) int strcoll(const char * , const char * ) __attribute__((__nonnull__(1,2)));
-# 169 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 169 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) size_t strxfrm(char * __restrict , const char * __restrict , size_t ) __attribute__((__nonnull__(2)));
-# 193 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 193 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) void *memchr(const void * , int , size_t ) __attribute__((__nonnull__(1)));
-# 209 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 209 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) char *strchr(const char * , int ) __attribute__((__nonnull__(1)));
-# 218 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 218 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) size_t strcspn(const char * , const char * ) __attribute__((__nonnull__(1,2)));
-# 232 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 232 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) char *strpbrk(const char * , const char * ) __attribute__((__nonnull__(1,2)));
-# 247 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 247 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) char *strrchr(const char * , int ) __attribute__((__nonnull__(1)));
-# 257 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 257 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) size_t strspn(const char * , const char * ) __attribute__((__nonnull__(1,2)));
-# 270 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 270 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) char *strstr(const char * , const char * ) __attribute__((__nonnull__(1,2)));
-# 280 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 280 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) char *strtok(char * __restrict , const char * __restrict ) __attribute__((__nonnull__(2)));
 extern __attribute__((__nothrow__)) char *_strtok_r(char * , const char * , char ** ) __attribute__((__nonnull__(2,3)));
-# 321 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 321 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) void *memset(void * , int , size_t ) __attribute__((__nonnull__(1)));
 
 
@@ -123,9 +123,9 @@ extern __attribute__((__nothrow__)) size_t strnlen(const char * , size_t ) __att
 
 
 extern __attribute__((__nothrow__)) size_t strlcpy(char * , const char * , size_t ) __attribute__((__nonnull__(1,2)));
-# 369 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 369 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) size_t strlcat(char * , const char * , size_t ) __attribute__((__nonnull__(1,2)));
-# 395 "D:\\Programmi\\Keil\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+# 395 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
 extern __attribute__((__nothrow__)) void _membitcpybl(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
 extern __attribute__((__nothrow__)) void _membitcpybb(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
 extern __attribute__((__nothrow__)) void _membitcpyhl(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));

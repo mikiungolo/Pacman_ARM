@@ -81,13 +81,13 @@ void draw_board(void){
 		for(j = 0; j < COLUMNS; j++){
 			switch(board[i][j]){
 				case E: 
-					draw_edge(j, i); 
+					draw_edge(i, j); 
 					break; 
 				case W: 
-					draw_wall(j, i); 
+					draw_wall(i, j); 
 					break;
 				case S: 
-					draw_pill(board[i][j], j, i); 
+					draw_pill(board[i][j], i, j); 
 					break;
 				default: 
 					break; 
@@ -99,9 +99,11 @@ void draw_board(void){
 /*----------------------------------------------------------------------------
   Function that draws a wall 
  *----------------------------------------------------------------------------*/
-void draw_wall(int i, int j){
+// y --> i become y
+// x --> j become x 
+void draw_wall(int y, int x){
 	int x0, y0, y1; 
-	for (x0 = i*PIXEL_CELL, y0 = j*PIXEL_CELL, y1 = y0 + PIXEL_CELL; y0 < y1; y0++){
+	for (x0 = x*PIXEL_CELL, y0 = y*PIXEL_CELL, y1 = y0 + PIXEL_CELL; y0 < y1; y0++){
 		LCD_DrawLine(x0, y0, x0 + PIXEL_CELL, y0, Blue2); 
 	}
 }
@@ -109,23 +111,45 @@ void draw_wall(int i, int j){
 /*----------------------------------------------------------------------------
   Function that turns off requested LED
  *----------------------------------------------------------------------------*/
-void draw_edge(int i, int j){
-	LCD_DrawLine((i*PIXEL_CELL), (j*PIXEL_CELL), ((i*PIXEL_CELL)+PIXEL_CELL), (j*PIXEL_CELL), Blue2); 
-	LCD_DrawLine((i*PIXEL_CELL)+PIXEL_CELL, (j*PIXEL_CELL), ((i*PIXEL_CELL)+PIXEL_CELL), (j*PIXEL_CELL)+PIXEL_CELL, Blue2); 
-	LCD_DrawLine((i*PIXEL_CELL), (j*PIXEL_CELL)+PIXEL_CELL, ((i*PIXEL_CELL)+PIXEL_CELL), (j*PIXEL_CELL)+PIXEL_CELL, Blue2); 
-	LCD_DrawLine((i*PIXEL_CELL), (j*PIXEL_CELL), ((i*PIXEL_CELL)), (j*PIXEL_CELL)+PIXEL_CELL, Blue2); 
+
+// y --> i become y
+// x --> j become x 
+void draw_edge(int y, int x){
+	// up
+	if (y > 0 && board[y-1][x] == E) {
+		// to clean line 
+		LCD_DrawLine((x*PIXEL_CELL), (y*PIXEL_CELL), ((x*PIXEL_CELL)+PIXEL_CELL), (y*PIXEL_CELL), Black); 
+	} else {
+		// to add new line of board 
+		LCD_DrawLine((x*PIXEL_CELL), (y*PIXEL_CELL), ((x*PIXEL_CELL)+PIXEL_CELL), (y*PIXEL_CELL), Blue2);  
+	}
+	
+	// right 
+	LCD_DrawLine((x*PIXEL_CELL)+PIXEL_CELL, (y*PIXEL_CELL), ((x*PIXEL_CELL)+PIXEL_CELL), (y*PIXEL_CELL)+PIXEL_CELL, Blue2); 
+	
+	// down
+	LCD_DrawLine((x*PIXEL_CELL), (y*PIXEL_CELL)+PIXEL_CELL, ((x*PIXEL_CELL)+PIXEL_CELL), (y*PIXEL_CELL)+PIXEL_CELL, Blue2); 
+	
+	// left 
+	if (x > 0 && board[y][x-1] == E) {
+		LCD_DrawLine((x*PIXEL_CELL), (y*PIXEL_CELL), ((x*PIXEL_CELL)), (y*PIXEL_CELL)+PIXEL_CELL, Black);
+	} else {
+		LCD_DrawLine((x*PIXEL_CELL), (y*PIXEL_CELL), ((x*PIXEL_CELL)), (y*PIXEL_CELL)+PIXEL_CELL, Blue2);
+	}
 }
 
 
 /*----------------------------------------------------------------------------
   Function that turns off requested LED
  *----------------------------------------------------------------------------*/
-void draw_pill(int kind_cell, int i, int j){
+// y --> i become y
+// x --> j become x 
+void draw_pill(int kind_cell, int y, int x){
 	switch(kind_cell){
 		case S: 
-			LCD_DrawCircle(((i*PIXEL_CELL)+5), ((j*PIXEL_CELL)+5), SP_r/2, White); 
+			LCD_DrawCircle(((x*PIXEL_CELL)+5), ((y*PIXEL_CELL)+5), SP_r/2, White); 
 		case P: 
-			LCD_DrawCircle(((i*PIXEL_CELL)+5), ((j*PIXEL_CELL)+5), PP_r/2, White); 
+			LCD_DrawCircle(((x*PIXEL_CELL)+5), ((y*PIXEL_CELL)+5), PP_r/2, White); 
 		default:
 			break; 
 	}

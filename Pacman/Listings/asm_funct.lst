@@ -19,10 +19,11 @@ ARM Macro Assembler    Page 1
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M3 --depe
 nd=.\objects\asm_funct.d -o.\objects\asm_funct.o -I.\Source -I.\Source\button_E
 XINT -I.\Source\led -I.\Source\timer -I.\Source\CMSIS_core -I.\RTE\_SW_Debug -I
-D:\Programmi\Keil\ARM\CMSIS\6.1.0\CMSIS\Core\Include -ID:\Programmi\Keil\Keil\L
-PC1700_DFP\2.7.2\Device\Include --predefine="__EVAL SETA 1" --predefine="__UVIS
-ION_VERSION SETA 541" --predefine="LPC175x_6x SETA 1" --predefine="_RTE_ SETA 1
-" --list=.\listings\asm_funct.lst ASM_funct.s
+C:\Users\ungol\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include -IC:\
+Users\ungol\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.7.2\Device\Include --pre
+define="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 541" --predefine="LP
+C175x_6x SETA 1" --predefine="_RTE_ SETA 1" --list=.\listings\asm_funct.lst ASM
+_funct.s
 
 
 
