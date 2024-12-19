@@ -2166,9 +2166,6 @@ int main (void) {
  LCD_Initialization();
 
  draw_board();
- //LCD_Clear(0x0000);
- //LCD_DrawLine(0, 0, 200, 200, 0x001F);
- //LCD_DrawLine(0, 0, 200, 200, 0x0000);
 
  ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) ) -> PCONP |= (1 << 22); // TURN ON TIMER 2
  ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) ) -> PCONP |= (1 << 23); // TURN ON TIMER 3

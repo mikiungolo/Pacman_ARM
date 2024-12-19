@@ -42,9 +42,6 @@ int main (void) {
 	LCD_Initialization(); 
 	
 	draw_board(); 
-	//LCD_Clear(Black); 
-	//LCD_DrawLine(0, 0, 200, 200, Blue); 
-	//LCD_DrawLine(0, 0, 200, 200, Black); 
 	
 	LPC_SC -> PCONP |= (1 << 22);  // TURN ON TIMER 2
 	LPC_SC -> PCONP |= (1 << 23);  // TURN ON TIMER 3	

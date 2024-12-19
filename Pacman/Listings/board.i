@@ -1805,21 +1805,22 @@ void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, ui
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
 # 12 "Source/Pacman/board.c" 2
-# 22 "Source/Pacman/board.c"
+# 23 "Source/Pacman/board.c"
 enum kind_cell{S, // standard pill
         P, // power pill
         W, // wall
         F, // free cell
         E, // edge of board
         TL, // teleport left
-        TR}; // teleport right
+        TR, // teleport right
+        PA}; // pacman
 
 
 void draw_board(void);
 void draw_edge(int, int);
 void draw_wall(int, int);
 void draw_pill(int, int, int);
-
+void draw_pacman(int, int);
 
 
 
@@ -1837,12 +1838,12 @@ volatile uint8_t board[30][26] = {
  F, F, F, F, F, E, S, W, W, W, W, S, W, W, S, W, W, W, W, S, E, F, F, F, F, F,
  F, F, F, F, F, E, S, W, W, W, W, S, W, W, S, W, W, W, W, S, E, F, F, F, F, F,
  F, F, F, F, F, E, S, W, W, S, S, F, F, F, F, S, S, W, W, S, E, F, F, F, F, F,
- F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
- E, E, E, E, E, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, E, E, E, E, E,
- TL, F, F, F, F, F, F, F, F, S, W, W, W, W, W, W, S, F, F, F, F, F, F, F, F, TR,
- E, E, E, E, E, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, E, E, E, E, E,
- F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
- F, F, F, F, F, E, S, W, W, S, S, F, F, F, F, S, S, W, W, S, E, F, F, F, F, F,
+ F, F, F, F, F, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, F, F, F, F, F,
+ E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E,
+ TL, F, F, F, F, F, F, F, F, S, E, E, E, E, E, E, S, F, F, F, F, F, F, F, F, TR,
+ E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E,
+ F, F, F, F, F, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, F, F, F, F, F,
+ F, F, F, F, F, E, S, W, W, S, S, F, PA, F, F, S, S, W, W, S, E, F, F, F, F, F,
  F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
  F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
  E, E, E, E, E, E, S, W, W, S, S, S, W, W, S, S, S, W, W, S, E, E, E, E, E, E,
@@ -1876,6 +1877,8 @@ void draw_board(void){
     case S:
      draw_pill(board[i][j], i, j);
      break;
+    case PA:
+     draw_pacman(i, j);
     default:
      break;
    }
@@ -1890,7 +1893,12 @@ void draw_board(void){
 // x --> j become x
 void draw_wall(int y, int x){
  int x0, y0, y1;
- for (x0 = x*9, y0 = y*9, y1 = y0 + 9; y0 < y1; y0++){
+ for (x0 = x*9,
+    y0 = y*9 + 40 // start board on display.,
+    y1 = y0 + 9;
+    y0 < y1;
+    y0++){
+
   LCD_DrawLine(x0, y0, x0 + 9, y0, 0x051F);
  }
 }
@@ -1902,26 +1910,28 @@ void draw_wall(int y, int x){
 // y --> i become y
 // x --> j become x
 void draw_edge(int y, int x){
+ int xb = x*9;
+ int yb = y*9 + 40 // start board on display.;
  // up
  if (y > 0 && board[y-1][x] == E) {
   // to clean line
-  LCD_DrawLine((x*9), (y*9), ((x*9)+9), (y*9), 0x0000);
+  LCD_DrawLine((xb+1), (yb), ((xb)+9 -1), (yb), 0x0000);
  } else {
   // to add new line of board
-  LCD_DrawLine((x*9), (y*9), ((x*9)+9), (y*9), 0x051F);
+  LCD_DrawLine((xb), (yb), ((xb)+9), (yb), 0x051F);
  }
 
  // right
- LCD_DrawLine((x*9)+9, (y*9), ((x*9)+9), (y*9)+9, 0x051F);
+ LCD_DrawLine((xb)+9, (yb), ((xb)+9), (yb)+9, 0x051F);
 
  // down
- LCD_DrawLine((x*9), (y*9)+9, ((x*9)+9), (y*9)+9, 0x051F);
+ LCD_DrawLine((xb), (yb)+9, ((xb)+9), (yb)+9, 0x051F);
 
  // left
  if (x > 0 && board[y][x-1] == E) {
-  LCD_DrawLine((x*9), (y*9), ((x*9)), (y*9)+9, 0x0000);
+  LCD_DrawLine((xb), (yb)+1, ((xb)), (yb)+9 -1, 0x0000);
  } else {
-  LCD_DrawLine((x*9), (y*9), ((x*9)), (y*9)+9, 0x051F);
+  LCD_DrawLine((xb), (yb), ((xb)), (yb)+9, 0x051F);
  }
 }
 
@@ -1932,12 +1942,18 @@ void draw_edge(int y, int x){
 // y --> i become y
 // x --> j become x
 void draw_pill(int kind_cell, int y, int x){
+ int xb = (x * 9);
+ int yb = (y * 9) + 40 // start board on display.;
  switch(kind_cell){
   case S:
-   LCD_DrawCircle(((x*9)+5), ((y*9)+5), 3 // radius standard pill/2, 0xFFFF);
+   LCD_DrawCircle((xb + 5), (yb + 5), 1 // radius standard pill, 0xFFFF);
   case P:
-   LCD_DrawCircle(((x*9)+5), ((y*9)+5), 5 // radius power pill/2, 0xFFFF);
+   LCD_DrawCircle((xb + 5), (yb + 5), 2 // radius power pill, 0xFFFF);
   default:
    break;
  }
+}
+
+void draw_pacman(int y, int x){
+  LCD_DrawCircle(x * 9 + 5, y * 9 + 40 // start board on display. + 5, 4 // "radius" Pacman, 0xFFE0);
 }
