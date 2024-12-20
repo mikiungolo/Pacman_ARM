@@ -1843,7 +1843,7 @@ volatile uint8_t board[30][26] = {
  TL, F, F, F, F, F, F, F, F, S, E, E, E, E, E, E, S, F, F, F, F, F, F, F, F, TR,
  E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E,
  F, F, F, F, F, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, F, F, F, F, F,
- F, F, F, F, F, E, S, W, W, S, S, F, PA, F, F, S, S, W, W, S, E, F, F, F, F, F,
+ F, F, F, F, F, E, S, W, W, S, S, P, PA, F, F, S, S, W, W, S, E, F, F, F, F, F,
  F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
  F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
  E, E, E, E, E, E, S, W, W, S, S, S, W, W, S, S, S, W, W, S, E, E, E, E, E, E,
@@ -1877,9 +1877,11 @@ void draw_board(void){
     case S:
      draw_pill(board[i][j], i, j);
      break;
+    case P:
+     draw_pill(board[i][j], i, j);
+     break;
     case PA:
      draw_pacman(i, j);
-    default:
      break;
    }
   }
@@ -1947,9 +1949,9 @@ void draw_pill(int kind_cell, int y, int x){
  switch(kind_cell){
   case S:
    LCD_DrawCircle((xb + 5), (yb + 5), 1 // radius standard pill, 0xFFFF);
+   break;
   case P:
-   LCD_DrawCircle((xb + 5), (yb + 5), 2 // radius power pill, 0xFFFF);
-  default:
+   LCD_DrawCircle((xb + 5), (yb + 5), 3 // radius power pill, 0xFFFF);
    break;
  }
 }
@@ -1957,3 +1959,5 @@ void draw_pill(int kind_cell, int y, int x){
 void draw_pacman(int y, int x){
   LCD_DrawCircle(x * 9 + 5, y * 9 + 40 // start board on display. + 5, 4 // "radius" Pacman, 0xFFE0);
 }
+
+// MOVEMENT PACMAN

@@ -15,9 +15,9 @@
 #define COLUMNS 26
 #define PIXEL_CELL 9
 #define SP_SIZE 1 				// radius standard pill
-#define PP_SIZE 2 				// radius power pill
+#define PP_SIZE 3 				// radius power pill
 #define PACMAN_SIZE 4 		// "radius" Pacman
-#define START_Y 40		// start board on display. 
+#define START_Y 40				// start board on display. 
 
 /* define enum for kind of cells in board */
 enum kind_cell{S,			// standard pill
@@ -57,7 +57,7 @@ volatile uint8_t board[ROWS][COLUMNS] = {
 	TL, F, F, F, F, F, F, F, F, S, E, E, E, E, E, E, S, F, F, F, F, F, F, F, F, TR, 
 	E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E,
 	F, F, F, F, F, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, F, F, F, F, F,
-	F, F, F, F, F, E, S, W, W, S, S, F, PA, F, F, S, S, W, W, S, E, F, F, F, F, F,
+	F, F, F, F, F, E, S, W, W, S, S, P, PA, F, F, S, S, W, W, S, E, F, F, F, F, F,
 	F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
 	F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
 	E, E, E, E, E, E, S, W, W, S, S, S, W, W, S, S, S, W, W, S, E, E, E, E, E, E,
@@ -91,9 +91,11 @@ void draw_board(void){
 				case S: 
 					draw_pill(board[i][j], i, j); 
 					break;
+				case P: 
+					draw_pill(board[i][j], i, j);
+					break;
 				case PA: 
 					draw_pacman(i, j); 
-				default: 
 					break; 
 			}
 		}
@@ -161,9 +163,9 @@ void draw_pill(int kind_cell, int y, int x){
 	switch(kind_cell){
 		case S: 
 			LCD_DrawCircle((xb + 5), (yb + 5), SP_SIZE, White); 
+			break;
 		case P: 
 			LCD_DrawCircle((xb + 5), (yb + 5), PP_SIZE, White); 
-		default:
 			break; 
 	}
 }
