@@ -9,7 +9,7 @@
 *********************************************************************************************************/
 #include "LPC17xx.h"
 #include "RIT.h"
-#include "../led/led.h"
+#include "Pacman/pacman.h"
 
 /******************************************************************************
 ** Function name:		RIT_IRQHandler
@@ -42,7 +42,7 @@ void RIT_IRQHandler (void)
 		switch(J_up){
 			case 1:
 				// code J_up
-				LED_On(0); 
+				set_direction(up);
 				break;
 			// code J_up when pressure is long 
 			case 60:	//3sec = 3000ms/50ms = 60
@@ -64,7 +64,7 @@ void RIT_IRQHandler (void)
 		switch(J_down){
 			case 1:
 				// code J_down
-				LED_On(1); 
+				set_direction(down);
 				break;
 			// code J_down when pressure is long 
 			case 60:	//3sec = 3000ms/50ms = 60
@@ -86,7 +86,7 @@ void RIT_IRQHandler (void)
 		switch(J_left){
 			case 1:
 				// code J_left
-				LED_On(2); 
+				set_direction(left);
 				break;
 			// code J_left when pressure is long 
 			case 60:	//3sec = 3000ms/50ms = 60
@@ -108,7 +108,7 @@ void RIT_IRQHandler (void)
 		switch(J_right){
 			case 1:
 				// code J_right
-				LED_On(3); 
+				set_direction(right);
 				break;
 			// code J_right when pressure is long 
 			case 60:	//3sec = 3000ms/50ms = 60

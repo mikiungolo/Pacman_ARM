@@ -575,6 +575,11 @@
               <FileType>5</FileType>
               <FilePath>.\Source\Pacman\pacman.h</FilePath>
             </File>
+            <File>
+              <FileName>game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\Pacman\game.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1170,6 +1175,11 @@
               <FileName>pacman.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Source\Pacman\pacman.h</FilePath>
+            </File>
+            <File>
+              <FileName>game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\Pacman\game.c</FilePath>
             </File>
           </Files>
         </Group>

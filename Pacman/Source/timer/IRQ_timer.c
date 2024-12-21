@@ -9,9 +9,9 @@
 *********************************************************************************************************/
 #include "LPC17xx.h"
 #include "timer.h"
-#include "../led/led.h"
 #include "../GLCD/GLCD.h" 
 #include <stdio.h> /*for sprintf*/
+#include "Pacman/pacman.h"
 
 /******************************************************************************
 ** Function name:		Timer0_IRQHandler
@@ -30,8 +30,8 @@ void TIMER0_IRQHandler (void)
 {
 	if(LPC_TIM0->IR & 1) // MR0
 	{ 
-		// your code - Refresh touch 
-		
+		// your code - movement
+		move_pacman();
 		LPC_TIM0->IR = 1;			//clear interrupt flag
 	}
 	else if(LPC_TIM0->IR & 2){ // MR1

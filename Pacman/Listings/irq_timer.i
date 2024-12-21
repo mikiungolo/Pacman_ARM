@@ -1797,16 +1797,6 @@ extern void TIMER1_IRQHandler (void);
 extern void TIMER2_IRQHandler (void);
 extern void TIMER3_IRQHandler (void);
 # 12 "Source/timer/IRQ_timer.c" 2
-# 1 "Source/timer\\../led/led.h" 1
-# 12 "Source/timer\\../led/led.h"
-void LED_init(void);
-void LED_deinit(void);
-
-
-void LED_On (unsigned int num);
-void LED_Off (unsigned int num);
-void LED_Out(unsigned int value);
-# 13 "Source/timer/IRQ_timer.c" 2
 # 1 "Source/timer\\../GLCD/GLCD.h" 1
 # 90 "Source/timer\\../GLCD/GLCD.h"
 void LCD_Initialization(void);
@@ -1817,7 +1807,7 @@ void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t
 void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, uint16_t bkColor );
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
-# 14 "Source/timer/IRQ_timer.c" 2
+# 13 "Source/timer/IRQ_timer.c" 2
 # 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdio.h" 1 3
 # 53 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdio.h" 3
     typedef unsigned int size_t;
@@ -2121,6 +2111,64 @@ extern __attribute__((__nothrow__)) int _fisatty(FILE * ) __attribute__((__nonnu
 
 extern __attribute__((__nothrow__)) void __use_no_semihosting_swi(void);
 extern __attribute__((__nothrow__)) void __use_no_semihosting(void);
+# 14 "Source/timer/IRQ_timer.c" 2
+# 1 "./Source\\Pacman/pacman.h" 1
+
+
+
+
+
+
+
+# 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdbool.h" 1 3
+# 9 "./Source\\Pacman/pacman.h" 2
+
+
+
+
+
+
+
+// enum movement
+enum movement{up,
+       right,
+       down,
+       left};
+
+
+enum kind_cell{S, // standard pill
+        P, // power pill
+        W, // wall
+        F, // free cell
+        E, // edge of board
+        TL, // teleport left
+        TR, // teleport right
+        PA}; // pacman
+
+
+
+
+void draw_board(void);
+
+
+
+
+void set_direction(enum movement);
+
+
+
+
+void move_pacman(void);
+
+
+
+
+void draw_pill(int, int, int, _Bool);
+
+
+
+
+void draw_pacman(int, int, _Bool);
 # 15 "Source/timer/IRQ_timer.c" 2
 # 25 "Source/timer/IRQ_timer.c"
 extern unsigned char led_value;
@@ -2131,8 +2179,8 @@ void TIMER0_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
  {
-  // your code - Refresh touch
-
+  // your code - movement
+  move_pacman();
   ((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR = 1; //clear interrupt flag
  }
  else if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 2){ // MR1

@@ -11,30 +11,19 @@
 #include "GLCD/GLCD.h" 
 
 /* define constants */ 
-#define ROWS 30
-#define COLUMNS 26
 #define PIXEL_CELL 9
 #define SP_SIZE 1 				// radius standard pill
-#define PP_SIZE 3 				// radius power pill
-#define PACMAN_SIZE 4 		// "radius" Pacman
+#define PP_SIZE 2 				// radius power pill
+#define PACMAN_SIZE 3 		// "radius" Pacman
 #define START_Y 40				// start board on display. 
 
-/* define enum for kind of cells in board */
-enum kind_cell{S,			// standard pill
-							 P,			// power pill
-							 W,			// wall
-							 F,			// free cell
-							 E,			// edge of board 
-							 TL,		// teleport left		
-							 TR,		// teleport right 
-							 PA};	  // pacman  	
 
 /* fnuctions declaration */ 
 void draw_board(void); 
 void draw_edge(int, int); 
 void draw_wall(int, int); 
-void draw_pill(int, int, int); 
-void draw_pacman(int, int); 
+void draw_pill(int, int, int, bool); 
+void draw_pacman(int, int, bool); 
 
 /* define global variables */ 	
 
@@ -54,10 +43,10 @@ volatile uint8_t board[ROWS][COLUMNS] = {
 	F, F, F, F, F, E, S, W, W, S, S, F, F, F, F, S, S, W, W, S, E, F, F, F, F, F,
 	F, F, F, F, F, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, F, F, F, F, F,
 	E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E,
-	TL, F, F, F, F, F, F, F, F, S, E, E, E, E, E, E, S, F, F, F, F, F, F, F, F, TR, 
+	TL, F, F, F, F, F, F, PA, F, S, E, E, E, E, E, E, S, F, F, F, F, F, F, F, F, TR, 
 	E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E,
 	F, F, F, F, F, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, F, F, F, F, F,
-	F, F, F, F, F, E, S, W, W, S, S, P, PA, F, F, S, S, W, W, S, E, F, F, F, F, F,
+	F, F, F, F, F, E, S, W, W, S, S, S, F, F, F, S, S, W, W, S, E, F, F, F, F, F,
 	F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
 	F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
 	E, E, E, E, E, E, S, W, W, S, S, S, W, W, S, S, S, W, W, S, E, E, E, E, E, E,
@@ -89,13 +78,10 @@ void draw_board(void){
 					draw_wall(i, j); 
 					break;
 				case S: 
-					draw_pill(board[i][j], i, j); 
-					break;
-				case P: 
-					draw_pill(board[i][j], i, j);
+					draw_pill(board[i][j], i, j, false); 
 					break;
 				case PA: 
-					draw_pacman(i, j); 
+					draw_pacman(i, j, false); 
 					break; 
 			}
 		}
@@ -157,21 +143,31 @@ void draw_edge(int y, int x){
  *----------------------------------------------------------------------------*/
 // y --> i become y
 // x --> j become x 
-void draw_pill(int kind_cell, int y, int x){
+void draw_pill(int kind_cell, int y, int x, bool clean){
 	int xb = (x * PIXEL_CELL); 
 	int yb = (y * PIXEL_CELL) + START_Y; 
+	uint16_t color; 
+	if (clean) 
+		color = Black; 
+	else 
+		color = White; 
+	
 	switch(kind_cell){
 		case S: 
-			LCD_DrawCircle((xb + 5), (yb + 5), SP_SIZE, White); 
+			LCD_DrawCircle((xb + 5), (yb + 5), SP_SIZE, color); 
 			break;
 		case P: 
-			LCD_DrawCircle((xb + 5), (yb + 5), PP_SIZE, White); 
+			LCD_DrawCircle((xb + 5), (yb + 5), PP_SIZE, color); 
 			break; 
 	}
 }
 
-void draw_pacman(int y, int x){
-		LCD_DrawCircle(x * PIXEL_CELL + 5, y * PIXEL_CELL + START_Y + 5, PACMAN_SIZE, Yellow); 
+void draw_pacman(int y, int x, bool clean){
+	uint16_t color; 
+	if (clean) 
+		color = Black; 
+	else 
+		color = Yellow; 
+	
+	LCD_DrawCircle(x * PIXEL_CELL + 5, y * PIXEL_CELL + START_Y + 5, PACMAN_SIZE, color); 
 }
-
-// MOVEMENT PACMAN 

@@ -2143,8 +2143,62 @@ void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
 # 24 "Source/sample.c" 2
 # 1 "Source\\Pacman/pacman.h" 1
-# 11 "Source\\Pacman/pacman.h"
- void draw_board(void);
+
+
+
+
+
+
+
+# 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdbool.h" 1 3
+# 9 "Source\\Pacman/pacman.h" 2
+
+
+
+
+
+
+
+// enum movement
+enum movement{up,
+       right,
+       down,
+       left};
+
+
+enum kind_cell{S, // standard pill
+        P, // power pill
+        W, // wall
+        F, // free cell
+        E, // edge of board
+        TL, // teleport left
+        TR, // teleport right
+        PA}; // pacman
+
+
+
+
+void draw_board(void);
+
+
+
+
+void set_direction(enum movement);
+
+
+
+
+void move_pacman(void);
+
+
+
+
+void draw_pill(int, int, int, _Bool);
+
+
+
+
+void draw_pacman(int, int, _Bool);
 # 25 "Source/sample.c" 2
 
 
@@ -2159,7 +2213,7 @@ int main (void) {
 
  SystemInit();
   LED_init();
- init_RIT(0x004C4B40);
+ init_RIT(0x003C4B40);
  enable_RIT();
   BUTTON_init();
  joystick_init();
@@ -2172,6 +2226,9 @@ int main (void) {
 
  // your code here
  // TIMERS AND RIT SHOULD BE INIT AND ENABLE
+
+ init_timer(0, 0, 0, 3, 0x98968); // timer for pacman movement. 25ms
+ enable_timer(0);
 
  ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) )->PCON |= 0x1;
  ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) )->PCON &= ~(0x2);

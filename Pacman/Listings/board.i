@@ -1791,8 +1791,62 @@ typedef struct
 } LPC_EMAC_TypeDef;
 # 10 "Source/Pacman/board.c" 2
 # 1 "Source/Pacman\\pacman.h" 1
-# 11 "Source/Pacman\\pacman.h"
- void draw_board(void);
+
+
+
+
+
+
+
+# 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdbool.h" 1 3
+# 9 "Source/Pacman\\pacman.h" 2
+
+
+
+
+
+
+
+// enum movement
+enum movement{up,
+       right,
+       down,
+       left};
+
+
+enum kind_cell{S, // standard pill
+        P, // power pill
+        W, // wall
+        F, // free cell
+        E, // edge of board
+        TL, // teleport left
+        TR, // teleport right
+        PA}; // pacman
+
+
+
+
+void draw_board(void);
+
+
+
+
+void set_direction(enum movement);
+
+
+
+
+void move_pacman(void);
+
+
+
+
+void draw_pill(int, int, int, _Bool);
+
+
+
+
+void draw_pacman(int, int, _Bool);
 # 11 "Source/Pacman/board.c" 2
 # 1 "./Source\\GLCD/GLCD.h" 1
 # 90 "./Source\\GLCD/GLCD.h"
@@ -1805,22 +1859,12 @@ void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, ui
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
 # 12 "Source/Pacman/board.c" 2
-# 23 "Source/Pacman/board.c"
-enum kind_cell{S, // standard pill
-        P, // power pill
-        W, // wall
-        F, // free cell
-        E, // edge of board
-        TL, // teleport left
-        TR, // teleport right
-        PA}; // pacman
-
-
+# 22 "Source/Pacman/board.c"
 void draw_board(void);
 void draw_edge(int, int);
 void draw_wall(int, int);
-void draw_pill(int, int, int);
-void draw_pacman(int, int);
+void draw_pill(int, int, int, _Bool);
+void draw_pacman(int, int, _Bool);
 
 
 
@@ -1840,10 +1884,10 @@ volatile uint8_t board[30][26] = {
  F, F, F, F, F, E, S, W, W, S, S, F, F, F, F, S, S, W, W, S, E, F, F, F, F, F,
  F, F, F, F, F, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, F, F, F, F, F,
  E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E,
- TL, F, F, F, F, F, F, F, F, S, E, E, E, E, E, E, S, F, F, F, F, F, F, F, F, TR,
+ TL, F, F, F, F, F, F, PA, F, S, E, E, E, E, E, E, S, F, F, F, F, F, F, F, F, TR,
  E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E,
  F, F, F, F, F, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, F, F, F, F, F,
- F, F, F, F, F, E, S, W, W, S, S, P, PA, F, F, S, S, W, W, S, E, F, F, F, F, F,
+ F, F, F, F, F, E, S, W, W, S, S, S, F, F, F, S, S, W, W, S, E, F, F, F, F, F,
  F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
  F, F, F, F, F, E, S, W, W, S, W, W, W, W, W, W, S, W, W, S, E, F, F, F, F, F,
  E, E, E, E, E, E, S, W, W, S, S, S, W, W, S, S, S, W, W, S, E, E, E, E, E, E,
@@ -1875,13 +1919,10 @@ void draw_board(void){
      draw_wall(i, j);
      break;
     case S:
-     draw_pill(board[i][j], i, j);
-     break;
-    case P:
-     draw_pill(board[i][j], i, j);
+     draw_pill(board[i][j], i, j, 0);
      break;
     case PA:
-     draw_pacman(i, j);
+     draw_pacman(i, j, 0);
      break;
    }
   }
@@ -1943,21 +1984,31 @@ void draw_edge(int y, int x){
 
 // y --> i become y
 // x --> j become x
-void draw_pill(int kind_cell, int y, int x){
+void draw_pill(int kind_cell, int y, int x, _Bool clean){
  int xb = (x * 9);
  int yb = (y * 9) + 40 // start board on display.;
+ uint16_t color;
+ if (clean)
+  color = 0x0000;
+ else
+  color = 0xFFFF;
+
  switch(kind_cell){
   case S:
-   LCD_DrawCircle((xb + 5), (yb + 5), 1 // radius standard pill, 0xFFFF);
+   LCD_DrawCircle((xb + 5), (yb + 5), 1 // radius standard pill, color);
    break;
   case P:
-   LCD_DrawCircle((xb + 5), (yb + 5), 3 // radius power pill, 0xFFFF);
+   LCD_DrawCircle((xb + 5), (yb + 5), 2 // radius power pill, color);
    break;
  }
 }
 
-void draw_pacman(int y, int x){
-  LCD_DrawCircle(x * 9 + 5, y * 9 + 40 // start board on display. + 5, 4 // "radius" Pacman, 0xFFE0);
-}
+void draw_pacman(int y, int x, _Bool clean){
+ uint16_t color;
+ if (clean)
+  color = 0x0000;
+ else
+  color = 0xFFE0;
 
-// MOVEMENT PACMAN
+ LCD_DrawCircle(x * 9 + 5, y * 9 + 40 // start board on display. + 5, 3 // "radius" Pacman, color);
+}

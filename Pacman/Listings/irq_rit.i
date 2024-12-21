@@ -1792,15 +1792,63 @@ extern void reset_RIT( void );
 
 extern void RIT_IRQHandler (void);
 # 12 "Source/RIT/IRQ_RIT.c" 2
-# 1 "Source/RIT\\../led/led.h" 1
-# 12 "Source/RIT\\../led/led.h"
-void LED_init(void);
-void LED_deinit(void);
+# 1 "./Source\\Pacman/pacman.h" 1
 
 
-void LED_On (unsigned int num);
-void LED_Off (unsigned int num);
-void LED_Out(unsigned int value);
+
+
+
+
+
+# 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdbool.h" 1 3
+# 9 "./Source\\Pacman/pacman.h" 2
+
+
+
+
+
+
+
+// enum movement
+enum movement{up,
+       right,
+       down,
+       left};
+
+
+enum kind_cell{S, // standard pill
+        P, // power pill
+        W, // wall
+        F, // free cell
+        E, // edge of board
+        TL, // teleport left
+        TR, // teleport right
+        PA}; // pacman
+
+
+
+
+void draw_board(void);
+
+
+
+
+void set_direction(enum movement);
+
+
+
+
+void move_pacman(void);
+
+
+
+
+void draw_pill(int, int, int, _Bool);
+
+
+
+
+void draw_pacman(int, int, _Bool);
 # 13 "Source/RIT/IRQ_RIT.c" 2
 # 23 "Source/RIT/IRQ_RIT.c"
 volatile int down_0 = 0;
@@ -1825,7 +1873,7 @@ void RIT_IRQHandler (void)
   switch(J_up){
    case 1:
     // code J_up
-    LED_On(0);
+    set_direction(up);
     break;
    // code J_up when pressure is long
    case 60: //3sec = 3000ms/50ms = 60
@@ -1847,7 +1895,7 @@ void RIT_IRQHandler (void)
   switch(J_down){
    case 1:
     // code J_down
-    LED_On(1);
+    set_direction(down);
     break;
    // code J_down when pressure is long
    case 60: //3sec = 3000ms/50ms = 60
@@ -1869,7 +1917,7 @@ void RIT_IRQHandler (void)
   switch(J_left){
    case 1:
     // code J_left
-    LED_On(2);
+    set_direction(left);
     break;
    // code J_left when pressure is long
    case 60: //3sec = 3000ms/50ms = 60
@@ -1891,7 +1939,7 @@ void RIT_IRQHandler (void)
   switch(J_right){
    case 1:
     // code J_right
-    LED_On(3);
+    set_direction(right);
     break;
    // code J_right when pressure is long
    case 60: //3sec = 3000ms/50ms = 60

@@ -35,8 +35,8 @@ int main (void) {
   	
 	SystemInit();  												/* System Initialization (i.e., PLL)  */
   LED_init();                           /* LED Initialization                 */	
-	init_RIT(0x004C4B40);									/* RIT Initialization 50 msec       */
-	enable_RIT();													/* enable RIT to count 50ms				 */
+	init_RIT(0x003C4B40);									/* RIT Initialization <50 msec        */
+	enable_RIT();													/* enable RIT to count 				  			 */
   BUTTON_init();												/* BUTTON Initialization              */
 	joystick_init(); 
 	LCD_Initialization(); 
@@ -48,6 +48,9 @@ int main (void) {
 	
 	// your code here 
 	// TIMERS AND RIT SHOULD BE INIT AND ENABLE
+	
+	init_timer(0, 0, 0, 3, 0x98968);		// timer for pacman movement. 25ms 
+	enable_timer(0);
 	
 	LPC_SC->PCON |= 0x1;									/* power-down	mode										*/
 	LPC_SC->PCON &= ~(0x2);						
