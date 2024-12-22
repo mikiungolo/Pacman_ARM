@@ -2169,11 +2169,19 @@ void draw_pill(int, int, int, _Bool);
 
 
 void draw_pacman(int, int, _Bool);
+
+
+
+
+void show_time(void);
+
+
+
+
+void show_score(void);
 # 15 "Source/timer/IRQ_timer.c" 2
 # 25 "Source/timer/IRQ_timer.c"
-extern unsigned char led_value;
-
-unsigned char ledval = 0xA5;
+extern volatile uint8_t time;
 
 void TIMER0_IRQHandler (void)
 {
@@ -2201,14 +2209,15 @@ void TIMER0_IRQHandler (void)
  }
   return;
 }
-# 65 "Source/timer/IRQ_timer.c"
+# 63 "Source/timer/IRQ_timer.c"
 void TIMER1_IRQHandler (void)
 {
 
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x08000) )->IR & 1) // MR0
  {
   // your code
-
+  time--;
+  show_time();
   ((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x08000) )->IR = 1; //clear interrupt flag
  }
  else if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x08000) )->IR & 2){ // MR1
@@ -2227,7 +2236,7 @@ void TIMER1_IRQHandler (void)
  }
  return;
 }
-# 100 "Source/timer/IRQ_timer.c"
+# 99 "Source/timer/IRQ_timer.c"
 void TIMER2_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
@@ -2253,7 +2262,7 @@ void TIMER2_IRQHandler (void)
  }
   return;
 }
-# 136 "Source/timer/IRQ_timer.c"
+# 135 "Source/timer/IRQ_timer.c"
 void TIMER3_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0

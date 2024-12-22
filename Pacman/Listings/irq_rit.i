@@ -1849,6 +1849,16 @@ void draw_pill(int, int, int, _Bool);
 
 
 void draw_pacman(int, int, _Bool);
+
+
+
+
+void show_time(void);
+
+
+
+
+void show_score(void);
 # 13 "Source/RIT/IRQ_RIT.c" 2
 # 23 "Source/RIT/IRQ_RIT.c"
 volatile int down_0 = 0;

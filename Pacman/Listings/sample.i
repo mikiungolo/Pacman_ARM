@@ -5,7 +5,14 @@
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
 # 1 "Source/sample.c" 2
-# 16 "Source/sample.c"
+
+
+
+
+
+
+
+
 # 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdio.h" 1 3
 # 53 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdio.h" 3
     typedef unsigned int size_t;
@@ -309,7 +316,7 @@ extern __attribute__((__nothrow__)) int _fisatty(FILE * ) __attribute__((__nonnu
 
 extern __attribute__((__nothrow__)) void __use_no_semihosting_swi(void);
 extern __attribute__((__nothrow__)) void __use_no_semihosting(void);
-# 17 "Source/sample.c" 2
+# 10 "Source/sample.c" 2
 # 1 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h" 1
 # 41 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h"
 typedef enum IRQn
@@ -2086,7 +2093,7 @@ typedef struct
        uint32_t RESERVED8;
   volatile uint32_t Module_ID;
 } LPC_EMAC_TypeDef;
-# 18 "Source/sample.c" 2
+# 11 "Source/sample.c" 2
 # 1 "Source\\led/led.h" 1
 # 12 "Source\\led/led.h"
 void LED_init(void);
@@ -2096,14 +2103,14 @@ void LED_deinit(void);
 void LED_On (unsigned int num);
 void LED_Off (unsigned int num);
 void LED_Out(unsigned int value);
-# 19 "Source/sample.c" 2
+# 12 "Source/sample.c" 2
 # 1 "Source\\button_EXINT/button.h" 1
 void BUTTON_init(void);
 
 void EINT1_IRQHandler(void);
 void EINT2_IRQHandler(void);
 void EINT3_IRQHandler(void);
-# 20 "Source/sample.c" 2
+# 13 "Source/sample.c" 2
 # 1 "Source\\timer/timer.h" 1
 # 14 "Source\\timer/timer.h"
 //uint32_t init_timer ( uint8_t timer_num, uint32_t Prescaler, uint8_t MatchReg, uint8_t SRImatchReg, uint32_t TimerInterval )
@@ -2117,7 +2124,7 @@ extern void TIMER0_IRQHandler (void);
 extern void TIMER1_IRQHandler (void);
 extern void TIMER2_IRQHandler (void);
 extern void TIMER3_IRQHandler (void);
-# 21 "Source/sample.c" 2
+# 14 "Source/sample.c" 2
 # 1 "Source\\RIT/RIT.h" 1
 # 17 "Source\\RIT/RIT.h"
 extern uint32_t init_RIT( uint32_t RITInterval );
@@ -2126,11 +2133,11 @@ extern void disable_RIT( void );
 extern void reset_RIT( void );
 
 extern void RIT_IRQHandler (void);
-# 22 "Source/sample.c" 2
+# 15 "Source/sample.c" 2
 # 1 "Source\\joystick/joystick.h" 1
 # 12 "Source\\joystick/joystick.h"
 void joystick_init(void);
-# 23 "Source/sample.c" 2
+# 16 "Source/sample.c" 2
 # 1 "Source\\GLCD/GLCD.h" 1
 # 90 "Source\\GLCD/GLCD.h"
 void LCD_Initialization(void);
@@ -2141,7 +2148,7 @@ void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t
 void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, uint16_t bkColor );
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
-# 24 "Source/sample.c" 2
+# 17 "Source/sample.c" 2
 # 1 "Source\\Pacman/pacman.h" 1
 
 
@@ -2199,7 +2206,17 @@ void draw_pill(int, int, int, _Bool);
 
 
 void draw_pacman(int, int, _Bool);
-# 25 "Source/sample.c" 2
+
+
+
+
+void show_time(void);
+
+
+
+
+void show_score(void);
+# 18 "Source/sample.c" 2
 
 
 extern unsigned char led_value;
@@ -2213,7 +2230,7 @@ int main (void) {
 
  SystemInit();
   LED_init();
- init_RIT(0x003C4B40);
+ init_RIT(0xD59F8);
  enable_RIT();
   BUTTON_init();
  joystick_init();
@@ -2227,7 +2244,10 @@ int main (void) {
  // your code here
  // TIMERS AND RIT SHOULD BE INIT AND ENABLE
 
- init_timer(0, 0, 0, 3, 0x98968); // timer for pacman movement. 25ms
+
+ game();
+
+ init_timer(0, 0, 0, 3, 0x5B8D8); // timer for pacman movement. 15ms
  enable_timer(0);
 
  ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) )->PCON |= 0x1;

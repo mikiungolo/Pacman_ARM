@@ -5,7 +5,7 @@
 ***************************************************************************************/
 
 /* include libraries */ 
-//#include <stdio.h>
+#include <stdio.h>
 #include "LPC17xx.h"
 #include "pacman.h"
 #include "GLCD/GLCD.h" 
@@ -14,18 +14,25 @@
 #define PIXEL_CELL 9
 #define SP_SIZE 1 				// radius standard pill
 #define PP_SIZE 2 				// radius power pill
-#define PACMAN_SIZE 3 		// "radius" Pacman
+#define PACMAN_SIZE 5 		// "radius" Pacman
 #define START_Y 40				// start board on display. 
+#define X_number 115			// X for number of score and time 
+#define Y_write 17 				// Y for score write 
 
 
 /* fnuctions declaration */ 
 void draw_board(void); 
+void draw_stats(void); 
 void draw_edge(int, int); 
 void draw_wall(int, int); 
 void draw_pill(int, int, int, bool); 
 void draw_pacman(int, int, bool); 
+void show_time(void); 
+void show_score(void); 
 
 /* define global variables */ 	
+extern volatile uint8_t time; 
+extern volatile int score; 
 
 /* map to display in board matrix */							 
 volatile uint8_t board[ROWS][COLUMNS] = {
@@ -67,7 +74,13 @@ volatile uint8_t board[ROWS][COLUMNS] = {
  *----------------------------------------------------------------------------*/
 void draw_board(void){
 	int i, j; 
+	
 	LCD_Clear(Black);
+	GUI_Text(0, 0, (uint8_t*)" Countdown: ", White, Black); 
+	GUI_Text(0, Y_write, (uint8_t*)" Score: ", White, Black); 
+	show_score(); 
+	show_time(); 
+	
 	for(i = 0; i < ROWS; i++){
 		for(j = 0; j < COLUMNS; j++){
 			switch(board[i][j]){
@@ -88,6 +101,26 @@ void draw_board(void){
 	}
 }
  
+/*----------------------------------------------------------------------------
+  Function that shows overall score. 
+ *----------------------------------------------------------------------------*/
+void show_score(void) {
+	char sScore[5]; 
+	
+	sprintf(sScore, "%d", score);
+	GUI_Text(X_number, Y_write, (uint8_t*)sScore, White, Black); 
+}
+
+/*----------------------------------------------------------------------------
+  Function that shows countdown timer 
+ *----------------------------------------------------------------------------*/
+void show_time(void) {
+	char sTime[3]; 
+	
+	sprintf(sTime, "%d", time); 
+	GUI_Text(X_number, 0, (uint8_t*)sTime, White, Black); 
+}
+
 /*----------------------------------------------------------------------------
   Function that draws a wall 
  *----------------------------------------------------------------------------*/

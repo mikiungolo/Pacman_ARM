@@ -22,9 +22,7 @@
 ** Returned value:		None
 **
 ******************************************************************************/
-extern unsigned char led_value;					/* defined in funct_led								*/
-
-unsigned char ledval = 0xA5;
+extern volatile uint8_t time; 
 
 void TIMER0_IRQHandler (void)
 {
@@ -68,7 +66,8 @@ void TIMER1_IRQHandler (void)
 	if(LPC_TIM1->IR & 1) // MR0
 	{ 
 		// your code 
-		
+		time--; 
+		show_time(); 
 		LPC_TIM1->IR = 1;			//clear interrupt flag
 	}
 	else if(LPC_TIM1->IR & 2){ // MR1

@@ -1,11 +1,4 @@
 /*----------------------------------------------------------------------------
- * Name:    sample.c
- * Purpose: 
- *		to control led11 and led 10 through EINT buttons (similarly to project 03_)
- *		to control leds9 to led4 by the timer handler (1 second - circular cycling)
- * Note(s): this version supports the LANDTIGER Emulator
- * Author: 	Paolo BERNARDI - PoliTO - last modified 15/12/2020
- *----------------------------------------------------------------------------
  *
  * This software is supplied "AS IS" without warranties of any kind.
  *
@@ -32,10 +25,10 @@ extern uint8_t ScaleFlag; // <- ScaleFlag needs to visible in order for the emul
   Main Program
  *----------------------------------------------------------------------------*/
 int main (void) {
-  	
+  
 	SystemInit();  												/* System Initialization (i.e., PLL)  */
   LED_init();                           /* LED Initialization                 */	
-	init_RIT(0x003C4B40);									/* RIT Initialization <50 msec        */
+	init_RIT(0xD59F8);										/* RIT Initialization 35 msec        */
 	enable_RIT();													/* enable RIT to count 				  			 */
   BUTTON_init();												/* BUTTON Initialization              */
 	joystick_init(); 
@@ -49,7 +42,10 @@ int main (void) {
 	// your code here 
 	// TIMERS AND RIT SHOULD BE INIT AND ENABLE
 	
-	init_timer(0, 0, 0, 3, 0x98968);		// timer for pacman movement. 25ms 
+	/* start game */ 
+	game(); 
+	
+	init_timer(0, 0, 0, 3, 0x5B8D8);		// timer for pacman movement. 15ms 
 	enable_timer(0);
 	
 	LPC_SC->PCON |= 0x1;									/* power-down	mode										*/
