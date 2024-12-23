@@ -2113,22 +2113,20 @@ extern __attribute__((__nothrow__)) void __use_no_semihosting_swi(void);
 extern __attribute__((__nothrow__)) void __use_no_semihosting(void);
 # 14 "Source/timer/IRQ_timer.c" 2
 # 1 "./Source\\Pacman/pacman.h" 1
-
-
-
-
-
-
-
+# 10 "./Source\\Pacman/pacman.h"
 # 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdbool.h" 1 3
-# 9 "./Source\\Pacman/pacman.h" 2
+# 11 "./Source\\Pacman/pacman.h" 2
 
+# 1 "./Source\\RIT/RIT.h" 1
+# 17 "./Source\\RIT/RIT.h"
+extern uint32_t init_RIT( uint32_t RITInterval );
+extern void enable_RIT( void );
+extern void disable_RIT( void );
+extern void reset_RIT( void );
 
-
-
-
-
-
+extern void RIT_IRQHandler (void);
+# 13 "./Source\\Pacman/pacman.h" 2
+# 22 "./Source\\Pacman/pacman.h"
 // enum movement
 enum movement{up,
        right,
@@ -2179,6 +2177,10 @@ void show_time(void);
 
 
 void show_score(void);
+
+void resume(void);
+
+void pause(void);
 # 15 "Source/timer/IRQ_timer.c" 2
 # 25 "Source/timer/IRQ_timer.c"
 extern volatile uint8_t time;

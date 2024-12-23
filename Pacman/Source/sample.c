@@ -8,7 +8,6 @@
                   
 #include <stdio.h>
 #include "LPC17xx.h"                    /* LPC17xx definitions                */
-#include "led/led.h"
 #include "button_EXINT/button.h"
 #include "timer/timer.h"
 #include "RIT/RIT.h"
@@ -27,14 +26,11 @@ extern uint8_t ScaleFlag; // <- ScaleFlag needs to visible in order for the emul
 int main (void) {
   
 	SystemInit();  												/* System Initialization (i.e., PLL)  */
-  LED_init();                           /* LED Initialization                 */	
 	init_RIT(0xD59F8);										/* RIT Initialization 35 msec        */
 	enable_RIT();													/* enable RIT to count 				  			 */
   BUTTON_init();												/* BUTTON Initialization              */
 	joystick_init(); 
 	LCD_Initialization(); 
-	
-	draw_board(); 
 	
 	LPC_SC -> PCONP |= (1 << 22);  // TURN ON TIMER 2
 	LPC_SC -> PCONP |= (1 << 23);  // TURN ON TIMER 3	
@@ -42,11 +38,11 @@ int main (void) {
 	// your code here 
 	// TIMERS AND RIT SHOULD BE INIT AND ENABLE
 	
-	/* start game */ 
-	game(); 
-	
 	init_timer(0, 0, 0, 3, 0x5B8D8);		// timer for pacman movement. 15ms 
-	enable_timer(0);
+	init_timer(1, 0, 0, 3, 0x17D7840); 	// game countdown, 1 sec
+	
+	/* start game in pause mode */ 
+	pause(); 
 	
 	LPC_SC->PCON |= 0x1;									/* power-down	mode										*/
 	LPC_SC->PCON &= ~(0x2);						

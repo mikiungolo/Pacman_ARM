@@ -5,8 +5,14 @@
 **--------------------------------------------------------------------------------------------------------       
 *********************************************************************************************************/
 
+/* include libraries */ 
+#include <stdio.h>
 #include <stdbool.h>
+#include "timer/timer.h"
+#include "RIT/RIT.h"
+#include "GLCD/GLCD.h" 
 
+/* define constants e new type */ 
 #define ROWS 30
 #define COLUMNS 26
 #define TELEPORT_POSY 14
@@ -63,3 +69,7 @@ void show_time(void);
   Function that shows overall score. 
  *----------------------------------------------------------------------------*/
 void show_score(void); 
+
+void resume(void);
+
+void pause(void);

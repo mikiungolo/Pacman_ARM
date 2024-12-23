@@ -24,7 +24,7 @@ volatile int down_0 = 0;
 volatile int down_1 = 0;
 volatile int down_2 = 0;
 
-
+extern volatile bool InPause; 
 void RIT_IRQHandler (void)
 {			
 	/* Static as its value persists between calls to the function. It is not reinitialized each time the function is executed.*/
@@ -129,7 +129,13 @@ void RIT_IRQHandler (void)
 			switch(down_0){
 				case 2:					// lasciare 2 ai bottoni: serve a non elaborare più volte il segnale. 
 					// code button 0 here 
-				
+					if(InPause){
+						resume(); 
+						InPause = false; 
+					} else {
+						pause();
+						InPause = true; 
+					}
 					break;
 				default:
 					break;

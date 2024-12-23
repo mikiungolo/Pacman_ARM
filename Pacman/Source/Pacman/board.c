@@ -5,16 +5,14 @@
 ***************************************************************************************/
 
 /* include libraries */ 
-#include <stdio.h>
 #include "LPC17xx.h"
 #include "pacman.h"
-#include "GLCD/GLCD.h" 
 
 /* define constants */ 
 #define PIXEL_CELL 9
 #define SP_SIZE 1 				// radius standard pill
 #define PP_SIZE 2 				// radius power pill
-#define PACMAN_SIZE 5 		// "radius" Pacman
+#define PACMAN_SIZE 3 		// "radius" Pacman
 #define START_Y 40				// start board on display. 
 #define X_number 115			// X for number of score and time 
 #define Y_write 17 				// Y for score write 
@@ -33,6 +31,8 @@ void show_score(void);
 /* define global variables */ 	
 extern volatile uint8_t time; 
 extern volatile int score; 
+extern volatile uint8_t cordX; 
+extern volatile uint8_t cordY; 
 
 /* map to display in board matrix */							 
 volatile uint8_t board[ROWS][COLUMNS] = {
@@ -50,7 +50,7 @@ volatile uint8_t board[ROWS][COLUMNS] = {
 	F, F, F, F, F, E, S, W, W, S, S, F, F, F, F, S, S, W, W, S, E, F, F, F, F, F,
 	F, F, F, F, F, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, F, F, F, F, F,
 	E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E,
-	TL, F, F, F, F, F, F, PA, F, S, E, E, E, E, E, E, S, F, F, F, F, F, F, F, F, TR, 
+	TL, F, F, F, F, F, F, F, F, S, E, E, E, E, E, E, S, F, F, F, F, F, F, F, F, TR, 
 	E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, E, E, E, E, E,
 	F, F, F, F, F, E, S, W, W, S, E, E, E, E, E, E, S, W, W, S, E, F, F, F, F, F,
 	F, F, F, F, F, E, S, W, W, S, S, S, F, F, F, S, S, W, W, S, E, F, F, F, F, F,
@@ -93,12 +93,10 @@ void draw_board(void){
 				case S: 
 					draw_pill(board[i][j], i, j, false); 
 					break;
-				case PA: 
-					draw_pacman(i, j, false); 
-					break; 
 			}
 		}
 	}
+	draw_pacman(cordX, cordY, false); 
 }
  
 /*----------------------------------------------------------------------------
@@ -111,6 +109,11 @@ void show_score(void) {
 	GUI_Text(X_number, Y_write, (uint8_t*)sScore, White, Black); 
 }
 
+void show_win(void) {
+	LCD_Clear(Black);
+	GUI_Text(105, 150, (uint8_t*)"VICTORY!", White, Black); 
+	disableAll(); 
+}
 /*----------------------------------------------------------------------------
   Function that shows countdown timer 
  *----------------------------------------------------------------------------*/

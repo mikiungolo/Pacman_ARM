@@ -68,6 +68,8 @@ void TIMER1_IRQHandler (void)
 		// your code 
 		time--; 
 		show_time(); 
+		if(time == 0) 
+			game_over(); 
 		LPC_TIM1->IR = 1;			//clear interrupt flag
 	}
 	else if(LPC_TIM1->IR & 2){ // MR1
