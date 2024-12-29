@@ -2138,14 +2138,7 @@ void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, ui
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
 # 14 "Source/Pacman\\pacman.h" 2
-
-
-
-
-
-
-
-
+# 24 "Source/Pacman\\pacman.h"
 // enum movement
 enum movement{up,
        right,
@@ -2200,6 +2193,10 @@ void show_score(void);
 void resume(void);
 
 void pause(void);
+
+void random_Ppills(void);
+
+void sub_Ppill(void);
 # 10 "Source/Pacman/board.c" 2
 # 22 "Source/Pacman/board.c"
 void draw_board(void);
@@ -2211,6 +2208,8 @@ void draw_pacman(int, int, _Bool);
 void show_time(void);
 void show_score(void);
 
+
+volatile uint8_t coordinates_pill[2][240];
 
 extern volatile uint8_t time;
 extern volatile int score;
@@ -2256,7 +2255,7 @@ volatile uint8_t board[30][26] = {
 
 
 void draw_board(void){
- int i, j;
+ int i, j, z = 0;
 
  LCD_Clear(0x0000);
  GUI_Text(0, 0, (uint8_t*)" Countdown: ", 0xFFFF, 0x0000);
@@ -2275,11 +2274,13 @@ void draw_board(void){
      break;
     case S:
      draw_pill(board[i][j], i, j, 0);
+     coordinates_pill[0][z] = i; // y cord
+     coordinates_pill[1][z] = j; // x cord
+     z++;
      break;
    }
   }
  }
- draw_pacman(cordX, cordY, 0);
 }
 
 
@@ -2294,7 +2295,7 @@ void show_score(void) {
 
 void show_win(void) {
  LCD_Clear(0x0000);
- GUI_Text(120, 160, (uint8_t*)"Game over!!!", 0xFFFF, 0x0000);
+ GUI_Text(95, 150, (uint8_t*)"VICTORY!", 0xFFFF, 0x0000);
  disableAll();
 }
 

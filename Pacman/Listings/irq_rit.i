@@ -2133,14 +2133,7 @@ void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, ui
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
 # 14 "./Source\\Pacman/pacman.h" 2
-
-
-
-
-
-
-
-
+# 24 "./Source\\Pacman/pacman.h"
 // enum movement
 enum movement{up,
        right,
@@ -2195,6 +2188,10 @@ void show_score(void);
 void resume(void);
 
 void pause(void);
+
+void random_Ppills(void);
+
+void sub_Ppill(void);
 # 13 "Source/RIT/IRQ_RIT.c" 2
 # 23 "Source/RIT/IRQ_RIT.c"
 volatile int down_0 = 0;

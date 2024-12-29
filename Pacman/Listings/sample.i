@@ -2128,6 +2128,139 @@ extern void RIT_IRQHandler (void);
 # 12 "Source\\joystick/joystick.h"
 void joystick_init(void);
 # 15 "Source/sample.c" 2
+# 1 "Source\\adc/adc.h" 1
+# 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 1 3
+# 58 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) void *memcpy(void * __restrict ,
+                    const void * __restrict , size_t ) __attribute__((__nonnull__(1,2)));
+
+
+
+
+
+
+extern __attribute__((__nothrow__)) void *memmove(void * ,
+                    const void * , size_t ) __attribute__((__nonnull__(1,2)));
+# 77 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) char *strcpy(char * __restrict , const char * __restrict ) __attribute__((__nonnull__(1,2)));
+
+
+
+
+
+
+extern __attribute__((__nothrow__)) char *strncpy(char * __restrict , const char * __restrict , size_t ) __attribute__((__nonnull__(1,2)));
+# 93 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) char *strcat(char * __restrict , const char * __restrict ) __attribute__((__nonnull__(1,2)));
+
+
+
+
+
+
+extern __attribute__((__nothrow__)) char *strncat(char * __restrict , const char * __restrict , size_t ) __attribute__((__nonnull__(1,2)));
+# 117 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) int memcmp(const void * , const void * , size_t ) __attribute__((__nonnull__(1,2)));
+
+
+
+
+
+
+
+extern __attribute__((__nothrow__)) int strcmp(const char * , const char * ) __attribute__((__nonnull__(1,2)));
+
+
+
+
+
+
+extern __attribute__((__nothrow__)) int strncmp(const char * , const char * , size_t ) __attribute__((__nonnull__(1,2)));
+# 141 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) int strcasecmp(const char * , const char * ) __attribute__((__nonnull__(1,2)));
+
+
+
+
+
+
+
+extern __attribute__((__nothrow__)) int strncasecmp(const char * , const char * , size_t ) __attribute__((__nonnull__(1,2)));
+# 158 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) int strcoll(const char * , const char * ) __attribute__((__nonnull__(1,2)));
+# 169 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) size_t strxfrm(char * __restrict , const char * __restrict , size_t ) __attribute__((__nonnull__(2)));
+# 193 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) void *memchr(const void * , int , size_t ) __attribute__((__nonnull__(1)));
+# 209 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) char *strchr(const char * , int ) __attribute__((__nonnull__(1)));
+# 218 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) size_t strcspn(const char * , const char * ) __attribute__((__nonnull__(1,2)));
+# 232 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) char *strpbrk(const char * , const char * ) __attribute__((__nonnull__(1,2)));
+# 247 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) char *strrchr(const char * , int ) __attribute__((__nonnull__(1)));
+# 257 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) size_t strspn(const char * , const char * ) __attribute__((__nonnull__(1,2)));
+# 270 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) char *strstr(const char * , const char * ) __attribute__((__nonnull__(1,2)));
+# 280 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) char *strtok(char * __restrict , const char * __restrict ) __attribute__((__nonnull__(2)));
+extern __attribute__((__nothrow__)) char *_strtok_r(char * , const char * , char ** ) __attribute__((__nonnull__(2,3)));
+# 321 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) void *memset(void * , int , size_t ) __attribute__((__nonnull__(1)));
+
+
+
+
+
+extern __attribute__((__nothrow__)) char *strerror(int );
+
+
+
+
+
+
+
+extern __attribute__((__nothrow__)) size_t strlen(const char * ) __attribute__((__nonnull__(1)));
+
+
+
+
+
+extern __attribute__((__nothrow__)) size_t strnlen(const char * , size_t ) __attribute__((__nonnull__(1)));
+
+
+
+
+
+
+
+extern __attribute__((__nothrow__)) size_t strlcpy(char * , const char * , size_t ) __attribute__((__nonnull__(1,2)));
+# 369 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) size_t strlcat(char * , const char * , size_t ) __attribute__((__nonnull__(1,2)));
+# 395 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
+extern __attribute__((__nothrow__)) void _membitcpybl(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+extern __attribute__((__nothrow__)) void _membitcpybb(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+extern __attribute__((__nothrow__)) void _membitcpyhl(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+extern __attribute__((__nothrow__)) void _membitcpyhb(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+extern __attribute__((__nothrow__)) void _membitcpywl(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+extern __attribute__((__nothrow__)) void _membitcpywb(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+extern __attribute__((__nothrow__)) void _membitmovebl(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+extern __attribute__((__nothrow__)) void _membitmovebb(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+extern __attribute__((__nothrow__)) void _membitmovehl(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+extern __attribute__((__nothrow__)) void _membitmovehb(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+extern __attribute__((__nothrow__)) void _membitmovewl(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+extern __attribute__((__nothrow__)) void _membitmovewb(void * , const void * , int , int , size_t ) __attribute__((__nonnull__(1,2)));
+# 2 "Source\\adc/adc.h" 2
+
+
+void ADC_init (void);
+void ADC_start_conversion (void);
+
+
+void ADC_IRQHandler(void);
+# 16 "Source/sample.c" 2
 # 1 "Source\\GLCD/GLCD.h" 1
 # 90 "Source\\GLCD/GLCD.h"
 void LCD_Initialization(void);
@@ -2138,12 +2271,12 @@ void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t
 void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, uint16_t bkColor );
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
-# 16 "Source/sample.c" 2
+# 17 "Source/sample.c" 2
 # 1 "Source\\Pacman/pacman.h" 1
 # 10 "Source\\Pacman/pacman.h"
 # 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdbool.h" 1 3
 # 11 "Source\\Pacman/pacman.h" 2
-# 22 "Source\\Pacman/pacman.h"
+# 24 "Source\\Pacman/pacman.h"
 // enum movement
 enum movement{up,
        right,
@@ -2198,7 +2331,11 @@ void show_score(void);
 void resume(void);
 
 void pause(void);
-# 17 "Source/sample.c" 2
+
+void random_Ppills(void);
+
+void sub_Ppill(void);
+# 18 "Source/sample.c" 2
 
 
 extern unsigned char led_value;
@@ -2211,23 +2348,25 @@ extern unsigned char led_value;
 int main (void) {
 
  SystemInit();
- init_RIT(0xD59F8);
- enable_RIT();
   BUTTON_init();
  joystick_init();
+ ADC_init();
+ init_RIT(0x16E360);
+ enable_RIT();
  LCD_Initialization();
 
  ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) ) -> PCONP |= (1 << 22); // TURN ON TIMER 2
  ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) ) -> PCONP |= (1 << 23); // TURN ON TIMER 3
 
  // your code here
- // TIMERS AND RIT SHOULD BE INIT AND ENABLE
-
- init_timer(0, 0, 0, 3, 0x5B8D8); // timer for pacman movement. 15ms
+ init_timer(0, 0, 0, 3, 0x571B0); // timer for pacman movement. 30ms B71B0 25ms 98968; 15ms 0x571B0
  init_timer(1, 0, 0, 3, 0x17D7840); // game countdown, 1 sec
 
 
  pause();
+
+
+ random_Ppills();
 
  ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) )->PCON |= 0x1;
  ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) )->PCON &= ~(0x2);

@@ -13,6 +13,11 @@
 #include <stdio.h> /*for sprintf*/
 #include "Pacman/pacman.h"
 
+extern volatile int time; 
+extern volatile int random_time[R_TIME];
+extern volatile bool InPause; 
+int i = 0; 
+
 /******************************************************************************
 ** Function name:		Timer0_IRQHandler
 **
@@ -22,14 +27,15 @@
 ** Returned value:		None
 **
 ******************************************************************************/
-extern volatile uint8_t time; 
+
 
 void TIMER0_IRQHandler (void)
 {
 	if(LPC_TIM0->IR & 1) // MR0
 	{ 
 		// your code - movement
-		move_pacman();
+		if(!InPause)
+			move_pacman();
 		LPC_TIM0->IR = 1;			//clear interrupt flag
 	}
 	else if(LPC_TIM0->IR & 2){ // MR1
@@ -65,11 +71,18 @@ void TIMER1_IRQHandler (void)
 
 	if(LPC_TIM1->IR & 1) // MR0
 	{ 
-		// your code 
+		// check time and game over
 		time--; 
 		show_time(); 
 		if(time == 0) 
 			game_over(); 
+		
+		// generate Power pills.
+		if (time == random_time[i]){
+			i++; 
+			sub_Ppill(); 
+		}
+		
 		LPC_TIM1->IR = 1;			//clear interrupt flag
 	}
 	else if(LPC_TIM1->IR & 2){ // MR1

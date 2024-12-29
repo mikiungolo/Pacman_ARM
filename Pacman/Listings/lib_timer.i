@@ -1876,7 +1876,7 @@ uint32_t init_timer ( uint8_t timer_num, uint32_t Prescaler, uint8_t MatchReg, u
 {
   if ( timer_num == 0 )
   {
-  //((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )-> PR = Prescaler;
+  ((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )-> PR = Prescaler;
 
   if (MatchReg == 0){
    ((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->MR0 = TimerInterval;

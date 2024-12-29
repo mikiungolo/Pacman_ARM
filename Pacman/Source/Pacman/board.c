@@ -29,6 +29,8 @@ void show_time(void);
 void show_score(void); 
 
 /* define global variables */ 	
+volatile uint8_t coordinates_pill[2][N_PILLS]; 
+
 extern volatile uint8_t time; 
 extern volatile int score; 
 extern volatile uint8_t cordX; 
@@ -73,7 +75,7 @@ volatile uint8_t board[ROWS][COLUMNS] = {
   Function that draws Pacman board
  *----------------------------------------------------------------------------*/
 void draw_board(void){
-	int i, j; 
+	int i, j, z = 0; 
 	
 	LCD_Clear(Black);
 	GUI_Text(0, 0, (uint8_t*)" Countdown: ", White, Black); 
@@ -92,11 +94,13 @@ void draw_board(void){
 					break;
 				case S: 
 					draw_pill(board[i][j], i, j, false); 
+					coordinates_pill[0][z] = i; 		// y cord 
+					coordinates_pill[1][z] = j; 		// x cord 
+					z++; 
 					break;
 			}
 		}
-	}
-	draw_pacman(cordX, cordY, false); 
+	} 
 }
  
 /*----------------------------------------------------------------------------
@@ -111,7 +115,7 @@ void show_score(void) {
 
 void show_win(void) {
 	LCD_Clear(Black);
-	GUI_Text(105, 150, (uint8_t*)"VICTORY!", White, Black); 
+	GUI_Text(95, 150, (uint8_t*)"VICTORY!", White, Black); 
 	disableAll(); 
 }
 /*----------------------------------------------------------------------------

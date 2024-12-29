@@ -15,9 +15,11 @@
 /* define constants e new type */ 
 #define ROWS 30
 #define COLUMNS 26
+#define N_PILLS 240 
 #define TELEPORT_POSY 14
 #define TR_X 25
 #define TL_X 0
+#define R_TIME 6 
 
 // enum movement 
 enum movement{up, 
@@ -73,3 +75,7 @@ void show_score(void);
 void resume(void);
 
 void pause(void);
+
+void random_Ppills(void);
+
+void sub_Ppill(void); 

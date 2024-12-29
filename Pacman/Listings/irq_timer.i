@@ -2126,7 +2126,7 @@ extern void reset_RIT( void );
 
 extern void RIT_IRQHandler (void);
 # 13 "./Source\\Pacman/pacman.h" 2
-# 22 "./Source\\Pacman/pacman.h"
+# 24 "./Source\\Pacman/pacman.h"
 // enum movement
 enum movement{up,
        right,
@@ -2181,16 +2181,24 @@ void show_score(void);
 void resume(void);
 
 void pause(void);
-# 15 "Source/timer/IRQ_timer.c" 2
-# 25 "Source/timer/IRQ_timer.c"
-extern volatile uint8_t time;
 
+void random_Ppills(void);
+
+void sub_Ppill(void);
+# 15 "Source/timer/IRQ_timer.c" 2
+
+extern volatile int time;
+extern volatile int random_time[6];
+extern volatile _Bool InPause;
+int i = 0;
+# 32 "Source/timer/IRQ_timer.c"
 void TIMER0_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
  {
   // your code - movement
-  move_pacman();
+  if(!InPause)
+   move_pacman();
   ((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR = 1; //clear interrupt flag
  }
  else if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 2){ // MR1
@@ -2211,15 +2219,24 @@ void TIMER0_IRQHandler (void)
  }
   return;
 }
-# 63 "Source/timer/IRQ_timer.c"
+# 69 "Source/timer/IRQ_timer.c"
 void TIMER1_IRQHandler (void)
 {
 
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x08000) )->IR & 1) // MR0
  {
-  // your code
+  // check time and game over
   time--;
   show_time();
+  if(time == 0)
+   game_over();
+
+  // generate Power pills.
+  if (time == random_time[i]){
+   i++;
+   sub_Ppill();
+  }
+
   ((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x08000) )->IR = 1; //clear interrupt flag
  }
  else if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x08000) )->IR & 2){ // MR1
@@ -2238,7 +2255,7 @@ void TIMER1_IRQHandler (void)
  }
  return;
 }
-# 99 "Source/timer/IRQ_timer.c"
+# 114 "Source/timer/IRQ_timer.c"
 void TIMER2_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
@@ -2264,7 +2281,7 @@ void TIMER2_IRQHandler (void)
  }
   return;
 }
-# 135 "Source/timer/IRQ_timer.c"
+# 150 "Source/timer/IRQ_timer.c"
 void TIMER3_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
