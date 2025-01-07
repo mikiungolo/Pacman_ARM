@@ -2185,11 +2185,23 @@ void show_time(void);
 
 void show_score(void);
 
+
+
+
+ void showGameMode(char* s);
+
+
+
+
 void resume(void);
 
-void pause(void);
+
+
 
 void random_Ppills(void);
+
+
+
 
 void sub_Ppill(void);
 # 13 "Source/RIT/IRQ_RIT.c" 2
@@ -2307,7 +2319,7 @@ void RIT_IRQHandler (void)
       resume();
       InPause = 0;
      } else {
-      pause();
+      showGameMode("PAUSE");
       InPause = 1;
      }
      break;

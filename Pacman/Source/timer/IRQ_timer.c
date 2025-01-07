@@ -10,7 +10,6 @@
 #include "LPC17xx.h"
 #include "timer.h"
 #include "../GLCD/GLCD.h" 
-#include <stdio.h> /*for sprintf*/
 #include "Pacman/pacman.h"
 
 extern volatile int time; 
@@ -75,7 +74,7 @@ void TIMER1_IRQHandler (void)
 		time--; 
 		show_time(); 
 		if(time == 0) 
-			game_over(); 
+			showGameMode("GAME OVER");  
 		
 		// generate Power pills.
 		if (time == random_time[i]){

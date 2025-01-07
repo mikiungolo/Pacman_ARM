@@ -20,13 +20,16 @@
 
 /* fnuctions declaration */ 
 void draw_board(void); 
-void draw_stats(void); 
 void draw_edge(int, int); 
 void draw_wall(int, int); 
 void draw_pill(int, int, int, bool); 
 void draw_pacman(int, int, bool); 
 void show_time(void); 
 void show_score(void); 
+void disableAll(void); 
+void resume(void); 
+void enableAll(void); 
+void showGameMode(char* s); 
 
 /* define global variables */ 	
 volatile uint8_t coordinates_pill[2][N_PILLS]; 
@@ -197,6 +200,9 @@ void draw_pill(int kind_cell, int y, int x, bool clean){
 	}
 }
 
+/*----------------------------------------------------------------------------
+  Function that draws Pacman 
+ *----------------------------------------------------------------------------*/
 void draw_pacman(int y, int x, bool clean){
 	uint16_t color; 
 	if (clean) 
@@ -205,4 +211,39 @@ void draw_pacman(int y, int x, bool clean){
 		color = Yellow; 
 	
 	LCD_DrawCircle(x * PIXEL_CELL + 5, y * PIXEL_CELL + START_Y + 5, PACMAN_SIZE, color); 
+}
+
+/*----------------------------------------------------------------------------
+  Function that enable timer and reset Rit 
+ *----------------------------------------------------------------------------*/
+void enableAll(void){
+	enable_timer(0); 
+	enable_timer(1); 
+	reset_RIT(); 
+}
+
+/*----------------------------------------------------------------------------
+  Function that disable timer and reset Rit
+ *----------------------------------------------------------------------------*/
+void disableAll(void){
+	reset_RIT(); 
+	disable_timer(0); 
+	disable_timer(1); 
+}
+
+/*----------------------------------------------------------------------------
+  Function that resume game
+ *----------------------------------------------------------------------------*/
+void resume(void){
+	draw_board(); 
+	enableAll(); 
+}
+
+/*----------------------------------------------------------------------------
+  Function that shows string game mode on Display: pause, game over, victory... 
+ *----------------------------------------------------------------------------*/
+void showGameMode(char* s){
+	disableAll();
+	LCD_Clear(Black);
+	GUI_Text(100, 150, (uint8_t*)s, White, Black);  	
 }

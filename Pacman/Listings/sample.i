@@ -2328,11 +2328,23 @@ void show_time(void);
 
 void show_score(void);
 
+
+
+
+ void showGameMode(char* s);
+
+
+
+
 void resume(void);
 
-void pause(void);
+
+
 
 void random_Ppills(void);
+
+
+
 
 void sub_Ppill(void);
 # 18 "Source/sample.c" 2
@@ -2363,7 +2375,7 @@ int main (void) {
  init_timer(1, 0, 0, 3, 0x17D7840); // game countdown, 1 sec
 
 
- pause();
+ showGameMode("PAUSE");
 
 
  random_Ppills();

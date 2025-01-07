@@ -13,15 +13,15 @@
 #define SCORE_P_PILLS 50
 #define Y_LIFE 30
 
+/* define functions */ 
 void set_direction(enum movement); 
 void move_pacman(void); 
 void set_direction(enum movement d); 
 void set_point(void); 
-void disableAll(void); 
-void show_win(); 
-void game_over(); 
+void random_Ppills(void); 
+void sub_Ppill(void); 
 							
-// define variables
+// variables
 volatile enum movement direction = left;
 volatile uint8_t cordX = 7; 
 volatile uint8_t cordY = 14; 
@@ -36,8 +36,6 @@ volatile int xLife = 25;
 extern volatile uint8_t board[ROWS][COLUMNS]; 
 extern volatile uint8_t coordinates_pill[2][N_PILLS]; 
 
-/* define functions */ 
-void move_pacman(void); 
 /*----------------------------------------------------------------------------
   Function for pacman movement
  *----------------------------------------------------------------------------*/
@@ -92,10 +90,16 @@ void move_pacman(void){
 	set_point(); 
 }
 
+/*----------------------------------------------------------------------------
+  Function that set new direction at pacman movement
+ *----------------------------------------------------------------------------*/
 void set_direction(enum movement d){
 	direction = d; 
 }
 
+/*----------------------------------------------------------------------------
+  Function that set points. Check new life and victory
+ *----------------------------------------------------------------------------*/
 void set_point(void) {
 	switch(board[cordY][cordX]){
 		case S: 
@@ -113,7 +117,7 @@ void set_point(void) {
 	}
 	// check
 	if(n_pills == 0) 
-		show_win(); 
+		showGameMode("VICTORY!"); 
 	else 
 		show_score(); 
 	// new life 
@@ -125,42 +129,9 @@ void set_point(void) {
 	}
 }
 
-void enableAll(void){
-	enable_timer(0); 
-	enable_timer(1); 
-	reset_RIT(); 
-}
-
-void pause(void){
-	LCD_Clear(Black);
-	GUI_Text(100, 150, (uint8_t*)"PAUSE", White, Black); 
-	disableAll(); 	
-}
-
-void disableAll(void){
-	reset_RIT(); 
-	disable_timer(0); 
-	disable_timer(1); 
-}
-
-void resume(void){
-	draw_board(); 
-	enableAll(); 
-}
-
-void game_over(){
-	disableAll(); 
-	LCD_Clear(Black); 
-	GUI_Text(80, 150, (uint8_t*)"GAME OVER!", White, Black); 
-}
-
-void show_win(void) {
-	disableAll(); 
-	LCD_Clear(Black);
-	GUI_Text(90, 150, (uint8_t*)"VICTORY!", White, Black); 
-}
-
-/* Calculate random time */
+/*----------------------------------------------------------------------------
+  Function that calculate random time 
+ *----------------------------------------------------------------------------*/
 void random_Ppills(void) {
 	srand(ADC_start_conversion());
 
@@ -175,7 +146,9 @@ void random_Ppills(void) {
 	}
 }
 
-// Substitute standard with power pills 
+/*----------------------------------------------------------------------------
+  Function that substitute standard with power pills 
+ *----------------------------------------------------------------------------*/
 void sub_Ppill(void) {
 	int r, x, y; 
 	bool valid = false; 

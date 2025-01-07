@@ -2190,23 +2190,38 @@ void show_time(void);
 
 void show_score(void);
 
+
+
+
+ void showGameMode(char* s);
+
+
+
+
 void resume(void);
 
-void pause(void);
+
+
 
 void random_Ppills(void);
+
+
+
 
 void sub_Ppill(void);
 # 10 "Source/Pacman/board.c" 2
 # 22 "Source/Pacman/board.c"
 void draw_board(void);
-void draw_stats(void);
 void draw_edge(int, int);
 void draw_wall(int, int);
 void draw_pill(int, int, int, _Bool);
 void draw_pacman(int, int, _Bool);
 void show_time(void);
 void show_score(void);
+void disableAll(void);
+void resume(void);
+void enableAll(void);
+void showGameMode(char* s);
 
 
 volatile uint8_t coordinates_pill[2][240];
@@ -2377,6 +2392,9 @@ void draw_pill(int kind_cell, int y, int x, _Bool clean){
  }
 }
 
+
+
+
 void draw_pacman(int y, int x, _Bool clean){
  uint16_t color;
  if (clean)
@@ -2385,4 +2403,39 @@ void draw_pacman(int y, int x, _Bool clean){
   color = 0xFFE0;
 
  LCD_DrawCircle(x * 9 + 5, y * 9 + 40 // start board on display. + 5, 3 // "radius" Pacman, color);
+}
+
+
+
+
+void enableAll(void){
+ enable_timer(0);
+ enable_timer(1);
+ reset_RIT();
+}
+
+
+
+
+void disableAll(void){
+ reset_RIT();
+ disable_timer(0);
+ disable_timer(1);
+}
+
+
+
+
+void resume(void){
+ draw_board();
+ enableAll();
+}
+
+
+
+
+void showGameMode(char* s){
+ disableAll();
+ LCD_Clear(0x0000);
+ GUI_Text(100, 150, (uint8_t*)s, 0xFFFF, 0x0000);
 }

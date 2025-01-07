@@ -1808,6 +1808,15 @@ void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, ui
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
 # 13 "Source/timer/IRQ_timer.c" 2
+# 1 "./Source\\Pacman/pacman.h" 1
+
+
+
+
+
+
+
+
 # 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdio.h" 1 3
 # 53 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdio.h" 3
     typedef unsigned int size_t;
@@ -2111,9 +2120,7 @@ extern __attribute__((__nothrow__)) int _fisatty(FILE * ) __attribute__((__nonnu
 
 extern __attribute__((__nothrow__)) void __use_no_semihosting_swi(void);
 extern __attribute__((__nothrow__)) void __use_no_semihosting(void);
-# 14 "Source/timer/IRQ_timer.c" 2
-# 1 "./Source\\Pacman/pacman.h" 1
-# 10 "./Source\\Pacman/pacman.h"
+# 10 "./Source\\Pacman/pacman.h" 2
 # 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdbool.h" 1 3
 # 11 "./Source\\Pacman/pacman.h" 2
 
@@ -2178,20 +2185,32 @@ void show_time(void);
 
 void show_score(void);
 
+
+
+
+ void showGameMode(char* s);
+
+
+
+
 void resume(void);
 
-void pause(void);
+
+
 
 void random_Ppills(void);
 
+
+
+
 void sub_Ppill(void);
-# 15 "Source/timer/IRQ_timer.c" 2
+# 14 "Source/timer/IRQ_timer.c" 2
 
 extern volatile int time;
 extern volatile int random_time[6];
 extern volatile _Bool InPause;
 int i = 0;
-# 32 "Source/timer/IRQ_timer.c"
+# 31 "Source/timer/IRQ_timer.c"
 void TIMER0_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
@@ -2219,7 +2238,7 @@ void TIMER0_IRQHandler (void)
  }
   return;
 }
-# 69 "Source/timer/IRQ_timer.c"
+# 68 "Source/timer/IRQ_timer.c"
 void TIMER1_IRQHandler (void)
 {
 
@@ -2229,7 +2248,7 @@ void TIMER1_IRQHandler (void)
   time--;
   show_time();
   if(time == 0)
-   game_over();
+   showGameMode("GAME OVER");
 
   // generate Power pills.
   if (time == random_time[i]){
@@ -2255,7 +2274,7 @@ void TIMER1_IRQHandler (void)
  }
  return;
 }
-# 114 "Source/timer/IRQ_timer.c"
+# 113 "Source/timer/IRQ_timer.c"
 void TIMER2_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
@@ -2281,7 +2300,7 @@ void TIMER2_IRQHandler (void)
  }
   return;
 }
-# 150 "Source/timer/IRQ_timer.c"
+# 149 "Source/timer/IRQ_timer.c"
 void TIMER3_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0

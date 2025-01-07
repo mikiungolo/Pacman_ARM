@@ -42,7 +42,7 @@ int main (void) {
 	init_timer(1, 0, 0, 3, 0x17D7840); 	// game countdown, 1 sec
 	
 	/* start game in pause mode */ 
-	pause(); 
+	showGameMode("PAUSE"); 
 	
 	/* calculate random time to generate Power pills */ 
 	random_Ppills(); 

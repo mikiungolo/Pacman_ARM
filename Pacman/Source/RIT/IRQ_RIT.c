@@ -133,7 +133,7 @@ void RIT_IRQHandler (void)
 						resume(); 
 						InPause = false; 
 					} else {
-						pause();
+						showGameMode("PAUSE"); 
 						InPause = true; 
 					}
 					break;
