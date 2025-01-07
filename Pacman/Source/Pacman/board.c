@@ -113,11 +113,6 @@ void show_score(void) {
 	GUI_Text(X_number, Y_write, (uint8_t*)sScore, White, Black); 
 }
 
-void show_win(void) {
-	LCD_Clear(Black);
-	GUI_Text(95, 150, (uint8_t*)"VICTORY!", White, Black); 
-	disableAll(); 
-}
 /*----------------------------------------------------------------------------
   Function that shows countdown timer 
  *----------------------------------------------------------------------------*/

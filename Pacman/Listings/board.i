@@ -2293,11 +2293,6 @@ void show_score(void) {
  GUI_Text(115 // X for number of score and time, 17 // Y for score write, (uint8_t*)sScore, 0xFFFF, 0x0000);
 }
 
-void show_win(void) {
- LCD_Clear(0x0000);
- GUI_Text(95, 150, (uint8_t*)"VICTORY!", 0xFFFF, 0x0000);
- disableAll();
-}
 
 
 

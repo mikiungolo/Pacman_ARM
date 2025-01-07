@@ -8,7 +8,6 @@
 #include "LPC17xx.h"
 #include "pacman.h"
 
-
 // define constants to game
 #define SCORE_S_PILLS 10
 #define SCORE_P_PILLS 50
@@ -18,8 +17,9 @@ void set_direction(enum movement);
 void move_pacman(void); 
 void set_direction(enum movement d); 
 void set_point(void); 
-void game(void); 
 void disableAll(void); 
+void show_win(); 
+void game_over(); 
 							
 // define variables
 volatile enum movement direction = left;
@@ -134,8 +134,7 @@ void enableAll(void){
 void pause(void){
 	LCD_Clear(Black);
 	GUI_Text(100, 150, (uint8_t*)"PAUSE", White, Black); 
-	//disableAll(); 	
-	reset_RIT(); 
+	disableAll(); 	
 }
 
 void disableAll(void){
@@ -150,9 +149,15 @@ void resume(void){
 }
 
 void game_over(){
-	LCD_Clear(Black); 
-	GUI_Text(105, 150, (uint8_t*)"GAME OVER!", White, Black); 
 	disableAll(); 
+	LCD_Clear(Black); 
+	GUI_Text(80, 150, (uint8_t*)"GAME OVER!", White, Black); 
+}
+
+void show_win(void) {
+	disableAll(); 
+	LCD_Clear(Black);
+	GUI_Text(90, 150, (uint8_t*)"VICTORY!", White, Black); 
 }
 
 /* Calculate random time */
