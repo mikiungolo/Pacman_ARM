@@ -2312,9 +2312,14 @@ void show_score(void) {
 
 
 void show_time(void) {
- char sTime[3];
+ char sTime[2];
 
  sprintf(sTime, "%d", time);
+ if (time < 10){
+  sTime[1] = sTime[0];
+  sTime[0] = ' ';
+ }
+
  GUI_Text(115 // X for number of score and time, 0, (uint8_t*)sTime, 0xFFFF, 0x0000);
 }
 

@@ -120,9 +120,14 @@ void show_score(void) {
   Function that shows countdown timer 
  *----------------------------------------------------------------------------*/
 void show_time(void) {
-	char sTime[3]; 
+	char sTime[2]; 
 	
 	sprintf(sTime, "%d", time); 
+	if (time < 10){
+		sTime[1] = sTime[0]; 
+		sTime[0] = ' '; 
+	}
+		
 	GUI_Text(X_number, 0, (uint8_t*)sTime, White, Black); 
 }
 

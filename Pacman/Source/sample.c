@@ -39,7 +39,7 @@ int main (void) {
 	
 	// your code here 
 	init_timer(0, 0, 0, 3, 0x571B0);		// timer for pacman movement. 30ms B71B0 25ms 98968; 15ms 0x571B0
-	init_timer(1, 0, 0, 3, 0x17D7840); 	// game countdown, 1 sec
+	init_timer(1, 0, 0, 3, 0x17D7840*0.056); 	// game countdown, 1 sec
 	
 	/* start game in pause mode */ 
 	showGameMode("PAUSE"); 
