@@ -17,7 +17,6 @@
 #define X_number 115			// X for number of score and time 
 #define Y_write 17 				// Y for score write 
 
-
 /* fnuctions declaration */ 
 void draw_board(void); 
 void draw_edge(int, int); 
@@ -149,7 +148,7 @@ void draw_wall(int y, int x){
 }
 
 /*----------------------------------------------------------------------------
-  Function that turns off requested LED
+  Function that draws a edge 
  *----------------------------------------------------------------------------*/
 
 // y --> i become y
@@ -182,7 +181,7 @@ void draw_edge(int y, int x){
 
 
 /*----------------------------------------------------------------------------
-  Function that turns off requested LED
+  Function that draws a pill
  *----------------------------------------------------------------------------*/
 // y --> i become y
 // x --> j become x 

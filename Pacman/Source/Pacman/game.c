@@ -43,48 +43,48 @@ void move_pacman(void){
 	if (cordX < (COLUMNS-1) && cordY < (ROWS-1)
 				|| (cordY == TELEPORT_POSY && (cordX == TR_X || cordX == TL_X))) {
 		switch(direction) {
+			// for each direction: check if possible continue and update Pacman position
+			case up: 
+				if(board[cordY-1][cordX] != W && board[cordY-1][cordX] != E) {
+					draw_pacman(cordY, cordX, true); 
+					cordY--; 
+					draw_pacman(cordY, cordX, false);
+				}
+				break; 
+				
+			case right: 
+					if(cordX == TR_X && cordY == TELEPORT_POSY) {
+						draw_pacman(cordY, cordX, true);
+						cordX = TL_X;
+					} else if(board[cordY][cordX+1] != W && board[cordY][cordX+1] != E) {
+						draw_pacman(cordY, cordX, true);
+						cordX++;
+					}
+					draw_pacman(cordY, cordX, false);
+				break; 
 			
-		case up: 
-			if(board[cordY-1][cordX] != W && board[cordY-1][cordX] != E) {
-				draw_pacman(cordY, cordX, true); 
-				cordY--; 
-				draw_pacman(cordY, cordX, false);
-			}
-			break; 
+			case down: 
+				if(board[cordY+1][cordX] != W && board[cordY+1][cordX] != E) {
+					draw_pacman(cordY, cordX, true);
+					cordY++; 
+					draw_pacman(cordY, cordX, false);
+				}
+				break; 
 			
-		case right: 
-				if(cordX == TR_X && cordY == TELEPORT_POSY) {
+			case left: 
+				if(cordX == TL_X && cordY == TELEPORT_POSY) {
 					draw_pacman(cordY, cordX, true);
-					cordX = TL_X;
-				} else if(board[cordY][cordX+1] != W && board[cordY][cordX+1] != E) {
-					draw_pacman(cordY, cordX, true);
-					cordX++;
+					cordX = TR_X;
+				}
+				else if(board[cordY][cordX-1] != W && board[cordY][cordX-1] != E) {
+						draw_pacman(cordY, cordX, true);
+						cordX--; 
 				}
 				draw_pacman(cordY, cordX, false);
-			break; 
-		
-		case down: 
-			if(board[cordY+1][cordX] != W && board[cordY+1][cordX] != E) {
-				draw_pacman(cordY, cordX, true);
-				cordY++; 
-				draw_pacman(cordY, cordX, false);
-			}
-			break; 
-		
-		case left: 
-			if(cordX == TL_X && cordY == TELEPORT_POSY) {
-				draw_pacman(cordY, cordX, true);
-				cordX = TR_X;
-			}
-			else if(board[cordY][cordX-1] != W && board[cordY][cordX-1] != E) {
-					draw_pacman(cordY, cordX, true);
-					cordX--; 
-			}
-			draw_pacman(cordY, cordX, false);
-			break; 
-		
-		default: 
-			break; 
+				break; 
+			
+			default: 
+				break; 
 		}
 	}
 	set_point(); 

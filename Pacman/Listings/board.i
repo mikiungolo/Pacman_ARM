@@ -2210,7 +2210,7 @@ void random_Ppills(void);
 
 void sub_Ppill(void);
 # 10 "Source/Pacman/board.c" 2
-# 22 "Source/Pacman/board.c"
+# 21 "Source/Pacman/board.c"
 void draw_board(void);
 void draw_edge(int, int);
 void draw_wall(int, int);

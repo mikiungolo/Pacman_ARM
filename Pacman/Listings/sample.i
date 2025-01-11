@@ -12,7 +12,6 @@
 
 
 
-
 # 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdio.h" 1 3
 # 53 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdio.h" 3
     typedef unsigned int size_t;
@@ -316,7 +315,7 @@ extern __attribute__((__nothrow__)) int _fisatty(FILE * ) __attribute__((__nonnu
 
 extern __attribute__((__nothrow__)) void __use_no_semihosting_swi(void);
 extern __attribute__((__nothrow__)) void __use_no_semihosting(void);
-# 10 "Source/sample.c" 2
+# 9 "Source/sample.c" 2
 # 1 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h" 1
 # 41 "C:/Users/ungol/AppData/Local/Arm/Packs/Keil/LPC1700_DFP/2.7.2/Device/Include\\LPC17xx.h"
 typedef enum IRQn
@@ -2093,14 +2092,14 @@ typedef struct
        uint32_t RESERVED8;
   volatile uint32_t Module_ID;
 } LPC_EMAC_TypeDef;
-# 11 "Source/sample.c" 2
+# 10 "Source/sample.c" 2
 # 1 "Source\\button_EXINT/button.h" 1
 void BUTTON_init(void);
 
 void EINT1_IRQHandler(void);
 void EINT2_IRQHandler(void);
 void EINT3_IRQHandler(void);
-# 12 "Source/sample.c" 2
+# 11 "Source/sample.c" 2
 # 1 "Source\\timer/timer.h" 1
 # 14 "Source\\timer/timer.h"
 //uint32_t init_timer ( uint8_t timer_num, uint32_t Prescaler, uint8_t MatchReg, uint8_t SRImatchReg, uint32_t TimerInterval )
@@ -2114,7 +2113,7 @@ extern void TIMER0_IRQHandler (void);
 extern void TIMER1_IRQHandler (void);
 extern void TIMER2_IRQHandler (void);
 extern void TIMER3_IRQHandler (void);
-# 13 "Source/sample.c" 2
+# 12 "Source/sample.c" 2
 # 1 "Source\\RIT/RIT.h" 1
 # 17 "Source\\RIT/RIT.h"
 extern uint32_t init_RIT( uint32_t RITInterval );
@@ -2123,11 +2122,11 @@ extern void disable_RIT( void );
 extern void reset_RIT( void );
 
 extern void RIT_IRQHandler (void);
-# 14 "Source/sample.c" 2
+# 13 "Source/sample.c" 2
 # 1 "Source\\joystick/joystick.h" 1
 # 12 "Source\\joystick/joystick.h"
 void joystick_init(void);
-# 15 "Source/sample.c" 2
+# 14 "Source/sample.c" 2
 # 1 "Source\\adc/adc.h" 1
 # 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 1 3
 # 58 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\string.h" 3
@@ -2260,7 +2259,7 @@ void ADC_start_conversion (void);
 
 
 void ADC_IRQHandler(void);
-# 16 "Source/sample.c" 2
+# 15 "Source/sample.c" 2
 # 1 "Source\\GLCD/GLCD.h" 1
 # 90 "Source\\GLCD/GLCD.h"
 void LCD_Initialization(void);
@@ -2271,7 +2270,7 @@ void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t
 void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, uint16_t bkColor );
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
-# 17 "Source/sample.c" 2
+# 16 "Source/sample.c" 2
 # 1 "Source\\Pacman/pacman.h" 1
 # 10 "Source\\Pacman/pacman.h"
 # 1 "C:\\Users\\ungol\\AppData\\Local\\Keil_v5\\ARM\\ARMCLANG\\bin\\..\\include\\stdbool.h" 1 3
@@ -2347,10 +2346,10 @@ void random_Ppills(void);
 
 
 void sub_Ppill(void);
-# 18 "Source/sample.c" 2
+# 17 "Source/sample.c" 2
 
 
-extern unsigned char led_value;
+extern uint8_t ScaleFlag; // <- ScaleFlag needs to visible in order for the emulator to find the symbol (can be placed also inside system_LPC17xx.h but since it is RO, it needs more work)
 
 
 
@@ -2367,12 +2366,9 @@ int main (void) {
  enable_RIT();
  LCD_Initialization();
 
- ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) ) -> PCONP |= (1 << 22); // TURN ON TIMER 2
- ((LPC_SC_TypeDef *) ((0x40080000UL) + 0x7C000) ) -> PCONP |= (1 << 23); // TURN ON TIMER 3
-
  // your code here
  init_timer(0, 0, 0, 3, 0x571B0); // timer for pacman movement. 30ms B71B0 25ms 98968; 15ms 0x571B0
- init_timer(1, 0, 0, 3, 0x17D7840*0.056); // game countdown, 1 sec
+ init_timer(1, 0, 0, 3, 0x17D7840*0.04); // game countdown, 1 sec
 
 
  showGameMode("PAUSE");

@@ -960,9 +960,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>SIMULATTOR</Define>
+              <Define>SIMULATOR</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Source;.\Source\button_EXINT;.\Source\led;.\Source\timer;.\Source\CMSIS_core</IncludePath>
+              <IncludePath>.\Source;.\Source\button_EXINT;.\Source\timer;.\Source\led;.\Source\CMSIS_core</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

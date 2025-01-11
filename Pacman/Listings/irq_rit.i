@@ -2313,7 +2313,7 @@ void RIT_IRQHandler (void)
   down_0++;
   if((((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00040) )->FIOPIN & (1<<10)) == 0){
    switch(down_0){
-    case 2: // lasciare 2 ai bottoni: serve a non elaborare più volte il segnale.
+    case 2:
      // code button 0 here
      if(InPause){
       resume();
