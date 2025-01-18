@@ -1794,6 +1794,7 @@ void LCD_DrawLine( uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1 , uint16_t
 void PutChar( uint16_t Xpos, uint16_t Ypos, uint8_t ASCI, uint16_t charColor, uint16_t bkColor );
 void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_t bkColor);
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
+void LCD_DrawFilledCircle(int xc, int yc, int r, uint16_t color);
 # 24 "Source/GLCD/GLCD.c" 2
 # 1 "Source/GLCD\\AsciiLib.h" 1
 # 26 "Source/GLCD\\AsciiLib.h"
@@ -2395,5 +2396,12 @@ void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor){
     LCD_SetPoint(x0 + x, y0 + y, bkColor);
    }
   }
+ }
+}
+
+void LCD_DrawFilledCircle(int xc, int yc, int r, uint16_t color) {
+ int i;
+ for (i = r; i > 0; i--) {
+  LCD_DrawCircle(xc, yc, i, color);
  }
 }

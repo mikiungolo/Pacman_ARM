@@ -35,8 +35,7 @@ volatile uint8_t coordinates_pill[2][N_PILLS];
 
 extern volatile uint8_t time; 
 extern volatile int score; 
-extern volatile uint8_t cordX; 
-extern volatile uint8_t cordY; 
+extern Position pacman; 
 
 /* map to display in board matrix */							 
 volatile uint8_t board[ROWS][COLUMNS] = {
@@ -215,6 +214,46 @@ void draw_pacman(int y, int x, bool clean){
 		color = Yellow; 
 	
 	LCD_DrawCircle(x * PIXEL_CELL + 5, y * PIXEL_CELL + START_Y + 5, PACMAN_SIZE, color); 
+}
+
+/*----------------------------------------------------------------------------
+  Function that draws Blinky Red
+----------------------------------------------------------------------------*/
+void draw_blinky(int y, int x, bool clean, enum game_strategy s) {
+  uint16_t body_color, eye_color, pupil_color;
+	int line_y, i; 
+	int xb = x * PIXEL_CELL;
+	int yb = y * PIXEL_CELL + START_Y;
+	
+	if (clean) {
+		body_color = Black;
+		eye_color = Black;
+	} else {
+		if (s == Chase)
+			body_color = Red;
+		else 
+			body_color = Blue;
+		eye_color = White;
+	}
+
+	// Draw Blinky's body (semicircle with a rectangle)
+	LCD_DrawFilledCircle(xb + 4, yb + 4, 2, body_color); 
+	for (line_y = yb + 4; line_y < yb + PIXEL_CELL-2; line_y++) {
+		LCD_DrawLine(xb+3, line_y, xb + PIXEL_CELL-3, line_y, body_color);
+	}
+
+	// Add wave pattern for the bottom of the ghost
+	for (i = 1; i < PIXEL_CELL; i += 2) {
+		if (i % 4 == 0) {
+			LCD_DrawLine(xb + i, yb + PIXEL_CELL - 2, xb + i + 1, yb + PIXEL_CELL-1, body_color);
+		} else {
+			LCD_DrawLine(xb + i, yb + PIXEL_CELL-1, xb + i + 1, yb + PIXEL_CELL - 2, body_color);
+		}
+	}
+
+	// Draw Blinky's eyes
+	LCD_DrawCircle(xb + 3, yb + 5, 1, eye_color); 
+	LCD_DrawCircle(xb + 7, yb + 5, 1, eye_color); 
 }
 
 /*----------------------------------------------------------------------------

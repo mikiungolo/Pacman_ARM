@@ -682,6 +682,12 @@ void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor){
 	}
 }
 
+void LCD_DrawFilledCircle(int xc, int yc, int r, uint16_t color) {
+	int i; 
+	for (i = r; i > 0; i--) {
+		LCD_DrawCircle(xc, yc, i, color);
+	}
+}
 /*********************************************************************************************************
       END FILE
 *********************************************************************************************************/

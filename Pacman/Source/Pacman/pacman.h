@@ -8,6 +8,7 @@
 /* include libraries */ 
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "timer/timer.h"
 #include "RIT/RIT.h"
 #include "GLCD/GLCD.h" 
@@ -20,6 +21,7 @@
 #define TR_X 25
 #define TL_X 0
 #define R_TIME 6 
+#define TIME_MORE_FAST 15 
 
 // enum movement 
 enum movement{up, 
@@ -37,6 +39,13 @@ enum kind_cell{S,			// standard pill
 							 TR,		// teleport right 
 							 PA};	  // pacman  	
 
+// Position
+typedef struct {
+    int x, y;  // Coordinate della cella
+} Position;
+
+enum game_strategy{Chase,
+									 Frightened}; 
 /*----------------------------------------------------------------------------
   Function that draws Pacman board
  *----------------------------------------------------------------------------*/
@@ -61,6 +70,11 @@ void draw_pill(int, int, int, bool);
   Function that draws Pacman 
  *----------------------------------------------------------------------------*/
 void draw_pacman(int, int, bool); 
+
+/*----------------------------------------------------------------------------
+  Function that draws Blinky Red
+----------------------------------------------------------------------------*/
+void draw_blinky(int y, int x, bool clean, enum game_strategy s); 
 
 /*----------------------------------------------------------------------------
   Function that shows countdown timer 
@@ -91,3 +105,10 @@ void random_Ppills(void);
   Function that substitute Standard Pills with Power Pills. 
  *----------------------------------------------------------------------------*/
 void sub_Ppill(void); 
+
+/*----------------------------------------------------------------------------
+  Function that move Blinky with an AI controlled  
+ *----------------------------------------------------------------------------*/	
+void move_blinky(void); 
+
+void change_strategy(void); 
