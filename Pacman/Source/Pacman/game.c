@@ -191,12 +191,19 @@ void sub_Ppill(void) {
 /*----------------------------------------------------------------------------
   **************************Blinky Control************************************
  *----------------------------------------------------------------------------*/
-// heuristic function: distance manhattan
+
+/*----------------------------------------------------------------------------
+	Function that calculates the Manhattan distance heuristic
+	The Manhattan distance is used to evaluate the proximity between
+	Blinky and its target position (Pacman or the farthest point). 
+ *----------------------------------------------------------------------------*/
 int heuristic(Position current, Position target) {
   return abs(current.x - target.x) + abs(current.y - target.y);
 }
 
-// Check valid node 
+/*----------------------------------------------------------------------------
+	Function that checks if a position is valid for movement.
+ *----------------------------------------------------------------------------*/
 bool is_valid(Position node) {
   return node.y >= 0 && node.y < ROWS &&
          node.x >= 0 && node.x < COLUMNS &&
@@ -205,12 +212,20 @@ bool is_valid(Position node) {
          !visited[node.y][node.x];    
 }
 
-// Add new node to list 
+/*----------------------------------------------------------------------------
+	Function that adds a node to the open list
+	Adds a node representing a potential move to the list of nodes
+	to be evaluated.
+ *----------------------------------------------------------------------------*/
 void add_to_open(int *openCount, Position node) {
   openList[(*openCount)++] = node;
 }
- 
-// Find lowest heuristic cost
+
+/*----------------------------------------------------------------------------
+	Function that finds the node with the lowest heuristic cost
+	This function iterates through the open list to find the node
+	that is closest to the target position according to the heuristic.
+ *----------------------------------------------------------------------------*/
 int find_lowest_h(int openCount, Position target) {
   int minIndex = 0, minValue = heuristic(openList[0], target);
   int i; 
@@ -224,7 +239,12 @@ int find_lowest_h(int openCount, Position target) {
   return minIndex;
 }
 
-// With pacman position and aggresivity coefficient, calculate target for blinky
+/*----------------------------------------------------------------------------
+	Function that calculates the aggressive target for Blinky
+	Based on Pacman's position and Blinky's aggressivity coefficient,
+	it determines a target position slightly ahead of Pacman's trajectory
+	or falls back to Pacman's exact position if unreachable.
+ *----------------------------------------------------------------------------*/
 Position get_aggr_target() {
   Position target;
 
@@ -233,13 +253,12 @@ Position get_aggr_target() {
   } else if (pacman.x < blinky.x && (pacman.x + blinky_coeff) < COLUMNS && board[pacman.y][pacman.x + blinky_coeff] != E && board[pacman.y][pacman.x + blinky_coeff] != W) {
     target.x = pacman.x + blinky_coeff;
   } else {
-    // if not possible, target is pacman
-    target.x = pacman.x;  // fallback alla posizione attuale
+    target.x = pacman.x;  // Fallback to Pacman's position
   }
 
   if (target.x == pacman.x){
     target.y = pacman.y; 
-  }else if (pacman.y > blinky.y && (pacman.y - blinky_coeff) > 0 && board[pacman.y - blinky_coeff][pacman.x] != E && board[pacman.y - blinky_coeff][pacman.x] != W) {
+  } else if (pacman.y > blinky.y && (pacman.y - blinky_coeff) > 0 && board[pacman.y - blinky_coeff][pacman.x] != E && board[pacman.y - blinky_coeff][pacman.x] != W) {
     target.y = pacman.y - blinky_coeff; 
   } else if (pacman.y + blinky_coeff < ROWS) {
     target.y = pacman.y + blinky_coeff; 
@@ -247,27 +266,36 @@ Position get_aggr_target() {
   return target;
 }
 
+/*----------------------------------------------------------------------------
+	Function that switches Blinky's strategy
+ *----------------------------------------------------------------------------*/
 void change_strategy(){
-	if(strategy == Chase){
-		reset_timer(2); 
-		init_timer(2, 0, 0, 5, 0xEE6B280*SIM_TO_REAL); 		// 10 sec: duration of strategy Frightened
-		enable_timer(2); 
-		strategy = Frightened; 
-		running = true; 
-	} else if (!running){
-		strategy = Chase; 
-		reset_timer(2); 
-		disable_timer(2); 
-	}
+  if(strategy == Chase){
+    reset_timer(2); 
+    init_timer(2, 0, 0, 5, 0xEE6B280*SIM_TO_REAL); // 10 sec for Frightened mode
+    enable_timer(2); 
+    strategy = Frightened; 
+    running = true; 
+  } else if (!running){
+    strategy = Chase; 
+    reset_timer(2); 
+    disable_timer(2); 
+  }
 }
 
+/*----------------------------------------------------------------------------
+	Function that implements the Greedy Best First Search algorithm for Blinky's movement
+	Greedy Best First Search uses a heuristic (Manhattan distance) to evaluate
+	adjacent cells. In Chase mode, Blinky moves toward Pacman by picking the
+	cell with the lowest heuristic cost. In Frightened mode, it moves to
+	maximize the distance from Pacman. Movement is restricted to valid cells.
+ *----------------------------------------------------------------------------*/
 void move_blinky() {
   int openCount = 0;
-	
-	// removed shape and restore pills if was present
+
   draw_blinky(blinky.y, blinky.x, true, strategy); 
-	if(board[blinky.y][blinky.x] == S || board[blinky.y][blinky.x] == P)
-		draw_pill(board[blinky.y][blinky.x], blinky.y, blinky.x, false); 
+  if(board[blinky.y][blinky.x] == S || board[blinky.y][blinky.x] == P)
+    draw_pill(board[blinky.y][blinky.x], blinky.y, blinky.x, false); 
 
   // Reset visited array
   int i, j; 
@@ -277,26 +305,22 @@ void move_blinky() {
     }
   }
 
-  // Add initial position to open list
   add_to_open(&openCount, blinky);
 
   Position target = (strategy == Chase) ? get_aggr_target() : pacman;
 
   while (openCount > 0) {
-    // Find the node with the lowest heuristic value
     int currentIndex = find_lowest_h(openCount, target);
     Position current = openList[currentIndex];
 
-    // Remove the node from open list
     for (i = currentIndex; i < openCount - 1; i++) {
       openList[i] = openList[i + 1];
     }
     openCount--;
 
-    // Mark current node as visited
     visited[current.y][current.x] = true;
 
-    Position bestMove = current;  // Default to current if no move is better
+    Position bestMove = current;
 
     int d;
     for (d = 0; d < 4; d++) {
@@ -312,7 +336,6 @@ void move_blinky() {
       }
     }
 
-    // Move Blinky to the best cell and exit loop
     if (bestMove.x != current.x || bestMove.y != current.y) {
       blinky = bestMove;
       draw_blinky(blinky.y, blinky.x, false, strategy);
@@ -320,47 +343,55 @@ void move_blinky() {
     }
   }
 
-  // Default: No valid move, stay in current position
   draw_blinky(blinky.y, blinky.x, false, strategy); 
 }
 
+/*----------------------------------------------------------------------------
+	Function that checks for contact between Pacman and Blinky
+	If contact occurs during Chase mode, Pacman loses a life. During
+	Frightened mode, Blinky is eaten, awarding Pacman points. Blinky
+	is respawned after a set duration.
+ *----------------------------------------------------------------------------*/
 void check_contact(void){
-	if(pacman.x == blinky.x && pacman.y == blinky.y && isAliveBleanky){
-		if(strategy == Chase){
-			disable_timer(0); 
-			nLife--; 
-			// clean cells 
-			draw_pacman(pacman.y, pacman.x, true); 
-			draw_blinky(blinky.y, blinky.x, true, strategy); 
-			if (nLife < 0)
-				showGameMode("GAME OVER"); 
-			else {
-				xLife++;
-				draw_pacman(Y_LIFE, xLife, true); 
-				strategy = Chase; 
-				blinky.x = START_X_B; 
-				blinky.y = START_Y_B; 
-				pacman.x = START_X_P; 
-				pacman.y = START_Y_P;
-				direction = left; 
-				enable_timer(0); 
-			}
-		} else{
-			disable_timer(2); 
-			isAliveBleanky = false; 
-			// start 3sec to restore 
-			reset_timer(2); 
-			init_timer(2, 0, 1, 5, 0x47868C0*SIM_TO_REAL); 		
-			enable_timer(2); 
-			score += 100; 
-			draw_blinky(blinky.y, blinky.x, true, strategy); 
-		}
-	}
+  if(pacman.x == blinky.x && pacman.y == blinky.y && isAliveBleanky){
+    if(strategy == Chase){
+      disable_timer(0); 
+      nLife--; 
+      draw_pacman(pacman.y, pacman.x, true); 
+      draw_blinky(blinky.y, blinky.x, true, strategy); 
+      if (nLife < 0)
+        showGameMode("GAME OVER"); 
+      else {
+        xLife++;
+        draw_pacman(Y_LIFE, xLife, true); 
+        strategy = Chase; 
+        blinky.x = START_X_B; 
+        blinky.y = START_Y_B; 
+        pacman.x = START_X_P; 
+        pacman.y = START_Y_P;
+        direction = left; 
+        enable_timer(0); 
+      }
+    } else {
+      disable_timer(2); 
+      isAliveBleanky = false; 
+      reset_timer(2); 
+      init_timer(2, 0, 1, 5, 0x47868C0*SIM_TO_REAL); // 3 sec respawn timer
+      enable_timer(2); 
+      score += 100; 
+      draw_blinky(blinky.y, blinky.x, true, strategy); 
+			draw_blinky(14, 12, false, Chase); 
+    }
+  }
 }
 
+/*----------------------------------------------------------------------------
+	Function that restores Blinky after being eaten
+ *----------------------------------------------------------------------------*/
 void restore_blinky(){
-	strategy = Chase; 
-	blinky.x = START_X_B; 
-	blinky.y = START_Y_B; 
-	isAliveBleanky = true; 
+	draw_blinky(14, 12, true, Chase); 
+  strategy = Chase; 
+  blinky.x = START_X_B; 
+  blinky.y = START_Y_B; 
+  isAliveBleanky = true; 
 }

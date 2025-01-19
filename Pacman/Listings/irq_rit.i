@@ -2405,9 +2405,18 @@ void sub_Ppill(void);
 
 void move_blinky(void);
 
+
+
+
 void change_strategy(void);
 
+
+
+
 void check_contact(void);
+
+
+
 
 void restore_blinky(void);
 # 13 "Source/RIT/IRQ_RIT.c" 2

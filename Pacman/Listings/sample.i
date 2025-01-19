@@ -2547,9 +2547,18 @@ void sub_Ppill(void);
 
 void move_blinky(void);
 
+
+
+
 void change_strategy(void);
 
+
+
+
 void check_contact(void);
+
+
+
 
 void restore_blinky(void);
 # 17 "Source/sample.c" 2
@@ -2573,7 +2582,7 @@ int main (void) {
 
  // your code here
  init_timer(0, 0, 0, 3, 0x571B0); // timer for pacman movement. 30ms B71B0 25ms 98968; 15ms 0x571B0
- init_timer(1, 0, 0, 3, 0x17D7840*0.05//0.04); // game countdown, 1 sec
+ init_timer(1, 0, 0, 3, 0x17D7840*0.04); // game countdown, 1 sec
 
 
  showGameMode("PAUSE");
