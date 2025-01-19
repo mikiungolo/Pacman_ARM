@@ -2321,7 +2321,7 @@ void GUI_Text(uint16_t Xpos, uint16_t Ypos, uint8_t *str,uint16_t Color, uint16_
 void LCD_DrawCircle(int x0, int y0, int r, uint16_t bkColor);
 void LCD_DrawFilledCircle(int xc, int yc, int r, uint16_t color);
 # 15 "Source/Pacman\\pacman.h" 2
-# 26 "Source/Pacman\\pacman.h"
+# 27 "Source/Pacman\\pacman.h"
 // enum movement
 enum movement{up,
        right,
@@ -2411,6 +2411,10 @@ void sub_Ppill(void);
 void move_blinky(void);
 
 void change_strategy(void);
+
+void check_contact(void);
+
+void restore_blinky(void);
 # 10 "Source/Pacman/board.c" 2
 # 21 "Source/Pacman/board.c"
 void draw_board(void);

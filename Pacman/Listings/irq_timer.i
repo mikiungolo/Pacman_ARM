@@ -2316,7 +2316,7 @@ extern void reset_RIT( void );
 
 extern void RIT_IRQHandler (void);
 # 14 "./Source\\Pacman/pacman.h" 2
-# 26 "./Source\\Pacman/pacman.h"
+# 27 "./Source\\Pacman/pacman.h"
 // enum movement
 enum movement{up,
        right,
@@ -2406,17 +2406,23 @@ void sub_Ppill(void);
 void move_blinky(void);
 
 void change_strategy(void);
+
+void check_contact(void);
+
+void restore_blinky(void);
 # 14 "Source/timer/IRQ_timer.c" 2
 
 extern volatile int time;
 extern volatile int random_time[6];
 extern volatile _Bool InPause;
 extern volatile int blinky_coeff;
+extern volatile _Bool isAliveBleanky;
+extern volatile _Bool running;
 
 volatile int time_move;
 volatile int cont_speed = 15;
 int i = 0;
-# 35 "Source/timer/IRQ_timer.c"
+# 37 "Source/timer/IRQ_timer.c"
 void TIMER0_IRQHandler (void)
 {
  if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
@@ -2426,12 +2432,14 @@ void TIMER0_IRQHandler (void)
    move_pacman();
 
    // blink move in according with his speed
-   if(time_move == 0){
+   if(time_move == 0 && isAliveBleanky){
     move_blinky();
     time_move = blinky_coeff;
    }
    else
     time_move--;
+
+   check_contact();
   }
 
   ((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR = 1; //clear interrupt flag
@@ -2454,7 +2462,7 @@ void TIMER0_IRQHandler (void)
  }
   return;
 }
-# 82 "Source/timer/IRQ_timer.c"
+# 86 "Source/timer/IRQ_timer.c"
 void TIMER1_IRQHandler (void)
 {
 
@@ -2497,52 +2505,57 @@ void TIMER1_IRQHandler (void)
  }
  return;
 }
-# 134 "Source/timer/IRQ_timer.c"
+# 138 "Source/timer/IRQ_timer.c"
 void TIMER2_IRQHandler (void)
 {
- if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
+ if(((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x10000) )->IR & 1) // MR0
  {
   // your code
+  running = 0;
   change_strategy();
   ((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x10000) )->IR = 1;
  }
- else if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 2){ // MR1
+ else if(((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x10000) )->IR & 2){ // MR1
   // your code
+  if(!isAliveBleanky){
+   restore_blinky();
+   time_move = blinky_coeff;
+  }
 
   ((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x10000) )->IR = 2;
  }
- else if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 4){ // MR2
+ else if(((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x10000) )->IR & 4){ // MR2
   // your code
 
   ((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x10000) )->IR = 4;
  }
- else if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 8){ // MR3
+ else if(((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x10000) )->IR & 8){ // MR3
   // your code
 
   ((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x10000) )->IR = 8;
  }
   return;
 }
-# 170 "Source/timer/IRQ_timer.c"
+# 179 "Source/timer/IRQ_timer.c"
 void TIMER3_IRQHandler (void)
 {
- if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 1) // MR0
+ if(((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x14000) )->IR & 1) // MR0
  {
   // your code
 
   ((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x14000) )->IR = 1;
  }
- else if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 2){ // MR1
+ else if(((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x14000) )->IR & 2){ // MR1
   // your code
 
   ((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x14000) )->IR = 2;
  }
- else if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 4){ // MR2
+ else if(((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x14000) )->IR & 4){ // MR2
   // your code
 
   ((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x14000) )->IR = 4;
  }
- else if(((LPC_TIM_TypeDef *) ((0x40000000UL) + 0x04000) )->IR & 8){ // MR3
+ else if(((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x14000) )->IR & 8){ // MR3
   // your code
 
   ((LPC_TIM_TypeDef *) ((0x40080000UL) + 0x14000) )->IR = 8;

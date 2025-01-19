@@ -14,6 +14,7 @@
 #include "GLCD/GLCD.h" 
 
 /* define constants e new type */ 
+#define SIM_TO_REAL 0.05//0.04
 #define ROWS 30
 #define COLUMNS 26
 #define N_PILLS 240 
@@ -112,3 +113,7 @@ void sub_Ppill(void);
 void move_blinky(void); 
 
 void change_strategy(void); 
+
+void check_contact(void); 
+
+void restore_blinky(void); 

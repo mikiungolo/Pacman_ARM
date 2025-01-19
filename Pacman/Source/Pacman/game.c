@@ -12,6 +12,10 @@
 #define SCORE_S_PILLS 10
 #define SCORE_P_PILLS 50
 #define Y_LIFE 30
+#define START_X_P 7
+#define START_Y_P 14
+#define START_X_B 12
+#define START_Y_B 11
 
 /* define functions */ 
 void set_direction(enum movement); 
@@ -23,19 +27,22 @@ void sub_Ppill(void);
 							
 // variables
 volatile enum movement direction = left;
-Position pacman = {7, 14}; 
-Position blinky = {12, 11}; 
+Position pacman = {START_X_P, START_Y_P}; 
+Position blinky = {START_X_B, START_Y_B}; 
 volatile int time = 60; 
 volatile int score = 0; 
 volatile uint8_t n_pills = N_PILLS; 
 volatile bool InPause = true; 
 volatile int random_time[R_TIME]; 
 volatile int nLife = 0; 
+volatile int takenLife = 0; 
 volatile int xLife = 25; 
 volatile enum game_strategy strategy = Chase; 
 volatile int blinky_coeff = 3; 
 volatile Position openList[ROWS * COLUMNS];
 volatile bool visited[ROWS][COLUMNS] = {false};
+volatile bool isAliveBleanky = true; 
+volatile bool running = false; 
 
 // Directions to move 
 int directions[4][2] = {
@@ -135,7 +142,8 @@ void set_point(void) {
 	else 
 		show_score(); 
 	// new life 
-	if (score - (nLife*1000) >= 1000) {
+	if (score - (takenLife*1000) >= 1000) {
+		takenLife++; 
 		nLife++;
 		// show new pacman life 
 		draw_pacman(Y_LIFE, xLife, false); 
@@ -241,18 +249,25 @@ Position get_aggr_target() {
 
 void change_strategy(){
 	if(strategy == Chase){
-		init_timer(2, 0, 0, 5, 0xEE6B280); 		// 10 sec: duration of strategy Frightened
-		strategy = Frightened; 
+		reset_timer(2); 
+		init_timer(2, 0, 0, 5, 0xEE6B280*SIM_TO_REAL); 		// 10 sec: duration of strategy Frightened
 		enable_timer(2); 
-	} else {
+		strategy = Frightened; 
+		running = true; 
+	} else if (!running){
 		strategy = Chase; 
+		reset_timer(2); 
 		disable_timer(2); 
 	}
 }
 
 void move_blinky() {
   int openCount = 0;
+	
+	// removed shape and restore pills if was present
   draw_blinky(blinky.y, blinky.x, true, strategy); 
+	if(board[blinky.y][blinky.x] == S || board[blinky.y][blinky.x] == P)
+		draw_pill(board[blinky.y][blinky.x], blinky.y, blinky.x, false); 
 
   // Reset visited array
   int i, j; 
@@ -309,3 +324,43 @@ void move_blinky() {
   draw_blinky(blinky.y, blinky.x, false, strategy); 
 }
 
+void check_contact(void){
+	if(pacman.x == blinky.x && pacman.y == blinky.y && isAliveBleanky){
+		if(strategy == Chase){
+			disable_timer(0); 
+			nLife--; 
+			// clean cells 
+			draw_pacman(pacman.y, pacman.x, true); 
+			draw_blinky(blinky.y, blinky.x, true, strategy); 
+			if (nLife < 0)
+				showGameMode("GAME OVER"); 
+			else {
+				xLife++;
+				draw_pacman(Y_LIFE, xLife, true); 
+				strategy = Chase; 
+				blinky.x = START_X_B; 
+				blinky.y = START_Y_B; 
+				pacman.x = START_X_P; 
+				pacman.y = START_Y_P;
+				direction = left; 
+				enable_timer(0); 
+			}
+		} else{
+			disable_timer(2); 
+			isAliveBleanky = false; 
+			// start 3sec to restore 
+			reset_timer(2); 
+			init_timer(2, 0, 1, 5, 0x47868C0*SIM_TO_REAL); 		
+			enable_timer(2); 
+			score += 100; 
+			draw_blinky(blinky.y, blinky.x, true, strategy); 
+		}
+	}
+}
+
+void restore_blinky(){
+	strategy = Chase; 
+	blinky.x = START_X_B; 
+	blinky.y = START_Y_B; 
+	isAliveBleanky = true; 
+}

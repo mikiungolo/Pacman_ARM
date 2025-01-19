@@ -16,6 +16,8 @@ extern volatile int time;
 extern volatile int random_time[R_TIME];
 extern volatile bool InPause; 
 extern volatile int blinky_coeff; 
+extern volatile bool isAliveBleanky; 
+extern volatile bool running; 
 
 volatile int time_move; 
 volatile int cont_speed = TIME_MORE_FAST; 
@@ -41,12 +43,14 @@ void TIMER0_IRQHandler (void)
 			move_pacman();
 			
 			// blink move in according with his speed 
-			if(time_move == 0){
+			if(time_move == 0 && isAliveBleanky){
 				move_blinky(); 
 				time_move = blinky_coeff; 
 			}
 			else 
 				time_move--; 
+			
+			check_contact(); 
 		}
 			
 		LPC_TIM0->IR = 1;			//clear interrupt flag
@@ -133,23 +137,28 @@ void TIMER1_IRQHandler (void)
 ******************************************************************************/
 void TIMER2_IRQHandler (void)
 {
-	if(LPC_TIM0->IR & 1) // MR0
+	if(LPC_TIM2->IR & 1) // MR0
 	{ 
 		// your code
+		running = false; 
 		change_strategy(); 
 		LPC_TIM2->IR = 1;			/* clear interrupt flag */
 	}
-	else if(LPC_TIM0->IR & 2){ // MR1
+	else if(LPC_TIM2->IR & 2){ // MR1
 		// your code	
+		if(!isAliveBleanky){
+			restore_blinky(); 
+			time_move = blinky_coeff; 
+		}
 		
 		LPC_TIM2->IR = 2;			/* clear interrupt flag */
 	}
-	else if(LPC_TIM0->IR & 4){ // MR2
+	else if(LPC_TIM2->IR & 4){ // MR2
 		// your code	
 		
 		LPC_TIM2->IR = 4;			/* clear interrupt flag */		
 	}
-	else if(LPC_TIM0->IR & 8){ // MR3
+	else if(LPC_TIM2->IR & 8){ // MR3
 		// your code	
 		
 		LPC_TIM2->IR = 8;			/* clear interrupt flag */
@@ -169,23 +178,23 @@ void TIMER2_IRQHandler (void)
 ******************************************************************************/
 void TIMER3_IRQHandler (void)
 {
-	if(LPC_TIM0->IR & 1) // MR0
+	if(LPC_TIM3->IR & 1) // MR0
 	{ 
 		// your code
 		
 		LPC_TIM3->IR = 1;			/* clear interrupt flag */
 	}
-	else if(LPC_TIM0->IR & 2){ // MR1
+	else if(LPC_TIM3->IR & 2){ // MR1
 		// your code	
 		
 		LPC_TIM3->IR = 2;			/* clear interrupt flag */
 	}
-	else if(LPC_TIM0->IR & 4){ // MR2
+	else if(LPC_TIM3->IR & 4){ // MR2
 		// your code	
 		
 		LPC_TIM3->IR = 4;			/* clear interrupt flag */
 	}
-	else if(LPC_TIM0->IR & 8){ // MR3
+	else if(LPC_TIM3->IR & 8){ // MR3
 		// your code	
 		
 		LPC_TIM3->IR = 8;			/* clear interrupt flag */
